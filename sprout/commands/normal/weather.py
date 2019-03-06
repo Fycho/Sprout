@@ -1,6 +1,4 @@
-import os, requests, json, re
-
-turing_key = os.environ.get('TURING_API_KEY')
+import requests, json, re, time
 
 
 async def run(bot, ctx, cmd, arg) -> None:
@@ -11,6 +9,7 @@ async def run(bot, ctx, cmd, arg) -> None:
         if len(args) < 2:
             args.append(0)
         weather_report = get_weather_of_city(args[0], args[1])
+        time.sleep(0.5)
         await bot.send(ctx, weather_report)
 
 
@@ -32,14 +31,11 @@ def is_number(s):
 
 
 def get_weather_of_city(city: str, day) -> str:
-    if is_number(day) == False:
-        return '参数不合法'
+    if is_number(day) == False or day > 6:
+        day = 0
 
     day_label = ('今天', '明天', '后天', '大后天', '大大后天', '大大大后天')
     day = int(day)
-
-    if (day > 6):
-        day = 0
 
     ret = requests.get(f'http://wthrcdn.etouch.cn/weather_mini?city={city}')
     res_dict = json.loads(ret.text)

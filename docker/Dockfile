@@ -1,0 +1,8 @@
+
+FROM python:3.7.2-alpine3.8
+
+RUN pip install msgpack requests aiocqhttp
+
+EXPOSE 8888
+
+CMD ["python", "/data/python/sprout/run.py"]

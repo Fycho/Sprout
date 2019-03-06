@@ -1,3 +1,6 @@
-SUPER_USERS = {172950203}
+import os
+su = os.environ.get('SUPER_ACCOUNT')
+
+SUPER_USERS = {su}
 ADMIN_COMMANDS = {'ping'}
-NORMAL_COMMANDS = {'weather'}
+NORMAL_COMMANDS = {'weather', 'vtb'}

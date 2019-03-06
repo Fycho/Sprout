@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+  cqhttp:
+    container_name: cqhttp
+    image: richardchien/cqhttp:latest
+    restart: always
+    environment:
+      COOLQ_ACCOUNT: 9999999999  # change to own bot account
+      CQHTTP_SERVE_DATA_FILES: "yes"
+    ports:
+      - "9000:9000"
+      - "5700:5700"
+    volumes:
+      - ../coolq:/home/user/coolq
+  sprout:
+    container_name: sprout
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      SUPER_ACCOUNT: 1111111111 # change to own super account
+    ports:
+      - "8888:8888"
+    volumes:
+      - ../python:/data/python
+    depends_on:
+      - cqhttp
