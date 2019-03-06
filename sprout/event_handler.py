@@ -42,7 +42,7 @@ async def _handle_admin_command(bot, ctx, cmd, arg) -> bool:
     if cmd not in bot.config.ADMIN_COMMANDS:
         return False
 
-    cmd = importlib.import_module(f'.commands.{cmd}', __package__)
+    cmd = importlib.import_module(f'.commands.admin.{cmd}', __package__)
     await cmd.run(bot, ctx, cmd, arg)
     return True
 
@@ -51,7 +51,7 @@ async def _handle_normal_command(bot, ctx, cmd, arg) -> bool:
     if cmd not in bot.config.NORMAL_COMMANDS:
         return False
 
-    cmd = importlib.import_module(f'.commands.{cmd}', __package__)
+    cmd = importlib.import_module(f'.commands.normal.{cmd}', __package__)
     await cmd.run(bot, ctx, cmd, arg)
     return True
 
