@@ -1,4 +1,3 @@
-from nonebot.default_config import *
-
-SUPERUSERS = {172950203}
-COMMAND_START = {'/'}
+SUPER_USERS = {172950203}
+ADMIN_COMMANDS = {'ping'}
+NORMAL_COMMANDS = {'weather'}

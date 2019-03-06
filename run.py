@@ -1,20 +1,13 @@
-import nonebot, config
-from os import path
+from sprout import Sprout
+import config
 
-nonebot.init(config)
-nonebot.load_builtin_plugins()
-nonebot.load_plugins(
-    path.join(path.dirname(__file__), 'plugins'),
-    'plugins'
-)
+sprout = Sprout(config)
+app = sprout.server_app
 
-bot = nonebot.get_bot()
-app = bot.asgi
 
-@bot.on_message()
-async def handle_msg(context):
-    # await bot.send(context, '你好呀，下面一条是你刚刚发的：')
-    return {'reply': context['message']}
+@app.route('/admin')
+async def admin():
+    return '待填坑'
 
 if __name__ == '__main__':
-    nonebot.run(host='0.0.0.0', port=8888)
+    sprout.run(host='0.0.0.0', port=8888)
