@@ -32,7 +32,7 @@ async def handle_command(bot, ctx) -> bool:
     message = ctx['message']
     indicator, cmd, arg = parse_command(message)
 
-    if indicator == '!' and user_id in bot.config.SUPER_USERS:
+    if indicator == '!' and str(user_id) in bot.config.SUPER_USERS:
         return await _handle_admin_command(bot, ctx, cmd, arg)
     elif indicator == '/':
         return await _handle_normal_command(bot, ctx, cmd, arg)

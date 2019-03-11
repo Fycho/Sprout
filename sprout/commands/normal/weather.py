@@ -9,7 +9,6 @@ async def run(bot, ctx, cmd, arg) -> None:
         if len(args) < 2:
             args.append(0)
         weather_report = get_weather_of_city(args[0], args[1])
-        time.sleep(0.5)
         await bot.send(ctx, weather_report)
 
 
