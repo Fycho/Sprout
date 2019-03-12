@@ -1,5 +1,5 @@
 from random import choice
-import requests, json
+import json, aiohttp
 
 
 class MoeApi:
@@ -13,17 +13,21 @@ class MoeApi:
     def __init__(self, mode):
         self.mode = mode
 
-    def exec(self):
+    async def exec(self):
         url = choice(self.pool) + self.sub_path
         print(f'get moe girl from: {url}')
-        ret = requests.get(url)
-        filtered_list = list(filter(lambda x: x['rating'] == self.mode, json.loads(ret.text)))
-        print(filtered_list)
-        return filtered_list
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as resp:
+                resp_text = await resp.text()
+
+                filtered_list = list(filter(lambda x: x['rating'] == self.mode, json.loads(resp_text)))
+                print(filtered_list)
+                return filtered_list
 
 
 async def run(bot, ctx, cmd, arg) -> None:
     api = MoeApi(MoeApi.safe_rating)
-    api_result = api.exec()
+    api_result = await api.exec()
     jpeg_url = choice(api_result)['jpeg_url']
     await bot.send(ctx, message=f'[CQ:image,file={jpeg_url}]')
+
