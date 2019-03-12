@@ -1,4 +1,4 @@
-import requests, json, re, aiohttp
+import json, re, aiohttp
 
 
 async def run(bot, ctx, cmd, arg) -> None:

@@ -19,9 +19,7 @@ class MoeApi:
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as resp:
                 resp_text = await resp.text()
-
                 filtered_list = list(filter(lambda x: x['rating'] == self.mode, json.loads(resp_text)))
-                print(filtered_list)
                 return filtered_list
 
 
@@ -29,5 +27,4 @@ async def run(bot, ctx, cmd, arg) -> None:
     api = MoeApi(MoeApi.safe_rating)
     api_result = await api.exec()
     jpeg_url = choice(api_result)['jpeg_url']
-    await bot.send(ctx, message=f'[CQ:image,file={jpeg_url}]')
-
+    await bot.send(ctx, message=jpeg_url)
