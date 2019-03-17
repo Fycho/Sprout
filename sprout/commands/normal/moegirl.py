@@ -35,8 +35,8 @@ class MoeApi:
         print(f'get moe girl from: {url}')
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as resp:
-                resp_text = await resp
-                result = json.load(resp_text)
+                resp_read = await resp.read()
+                result = json.load(resp_read)
                 filtered_list = list(filter(lambda x: x['rating'] == self.mode, result['post']))
                 return filtered_list
 
