@@ -36,7 +36,8 @@ class MoeApi:
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as resp:
                 resp_text = await resp.text()
-                filtered_list = list(filter(lambda x: x['rating'] == self.mode, json.loads(resp_text)))
+                result = json.load(resp_text)
+                filtered_list = list(filter(lambda x: x['rating'] == self.mode, result['post']))
                 return filtered_list
 
 
