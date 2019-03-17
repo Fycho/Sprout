@@ -42,10 +42,10 @@ class MoeApi:
 
 async def run(bot, ctx, cmd, arg) -> None:
     api = MoeApi(MoeApi.safe_rating)
-    if not cmd:
+    if not arg:
         api_result = await api.popular()
     else:
-        params = re.sub(r'\s+', '+', cmd)
+        params = re.sub(r'\s+', '+', arg)
         api_result = await api.search(params)
 
     if len(api_result) == 0:
