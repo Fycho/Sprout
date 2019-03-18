@@ -1,6 +1,6 @@
 from random import choice
 from urllib import parse
-import json, aiohttp, re, asyncio
+import json, aiohttp
 
 
 class MoeApi:
@@ -46,22 +46,9 @@ async def run(bot, ctx, cmd, arg) -> None:
     if not arg:
         api_result = await api.popular()
     else:
-        params = re.sub(r'\s+', '+', arg)
-        api_result = await api.search(params)
+        api_result = await api.search(arg)
 
     if len(api_result) == 0:
         return await bot.send(ctx, message='没有找到相关资源')
     jpeg_url = choice(api_result)['jpeg_url']
     await bot.send(ctx, message=jpeg_url)
-
-
-async def mock_coroutine():
-    api = MoeApi(MoeApi.safe_rating)
-    api_result = await api.search('kafuu_chino')
-    jpeg_url = choice(api_result)['jpeg_url']
-    print(jpeg_url)
-
-if __name__ == '__main__':
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(mock_coroutine())
-    loop.close()

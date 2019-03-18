@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from sprout import Sprout
 import config
 
