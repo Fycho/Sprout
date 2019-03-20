@@ -37,16 +37,22 @@ async def handle_list_message(bot, ctx):
         rows = c.fetchall()
         items = list(map(lambda row: dict(zip([d[0] for d in c.description], row)), rows))
 
-    message = '【Virtual Youtuber bilibili 开播提醒】可供订阅的Virtual Youtuber 列表：\n'
+    message = '【Virtual Youtuber bilibili 开播提醒】可供订阅的Virtual Youtuber 列表：'
     for i in items:
-        message += '【' + str(i['vid']) + '】' + i['name_zh'] + '\n'
+        message += '\n【' + str(i['vid']) + '】' + i['name_zh']
 
+    return await bot.send(ctx, message)
+
+
+async def handle_index(bot, ctx):
+    # 后期整合进/help, 嗯，先这样吧
+    message = '欢迎使用Virtual Youtuber Helper，该指令提供了查看当前正在bilibili直播的虚拟主播以及订阅喜欢的虚拟主播的功能，被订阅的主播在直播时会给你发通知\n详情请/vtb help'
     return await bot.send(ctx, message)
 
 
 async def handle_help(bot, ctx):
     # 后期整合进/help, 嗯，先这样吧
-    message = '指令帮助：\n/vtb now - 查看现在有哪些虚拟主播在bilibili直播\n/vtb mylist - 查看已订阅主播\n/vtb subscribe <编号> - 订阅该主播 \n/vtb unsubscribe <编号> - 取消订阅该主播 \n/vtb subscribe all - 一键订阅全部 \n/vtb unsubscribe all - 一键取消所有订阅\n/vtb help - 本帮助'
+    message = '指令帮助：\n/vtb list - 查看支持的虚拟主播列表\n/vtb now - 查看现在有哪些虚拟主播在bilibili直播\n/vtb mylist - 查看已订阅主播\n/vtb subscribe <编号> - 订阅该主播 \n/vtb unsubscribe <编号> - 取消订阅该主播 \n/vtb subscribe all - 一键订阅全部 \n/vtb unsubscribe all - 一键取消所有订阅\n/vtb help - 本帮助'
     return await bot.send(ctx, message)
 
 
@@ -133,7 +139,7 @@ async def handle_query_status(bot, ctx):
 
 async def run(bot, ctx, cmd, arg) -> None:
     if not arg:
-        return await handle_list_message(bot, ctx)
+        return await handle_index(bot, ctx)
 
     args = re.split('\s+', arg)
     sub_cmd = args[0]
@@ -141,6 +147,8 @@ async def run(bot, ctx, cmd, arg) -> None:
 
     if sub_cmd == 'mylist':
         return await query_my_subscription(bot, ctx)
+    elif sub_cmd == 'list':
+        return await handle_list_message(bot, ctx)
     elif sub_cmd == 'subscribe':
         return await handle_subscribe(bot, ctx, sub_arg)
     elif sub_cmd == 'unsubscribe':
