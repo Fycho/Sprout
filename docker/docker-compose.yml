@@ -6,10 +6,10 @@ services:
     image: richardchien/cqhttp:latest
     restart: always
     environment:
-      COOLQ_ACCOUNT: 9999999999  # change to own bot account
+      COOLQ_ACCOUNT: 2729117176  # change to own bot account
       CQHTTP_SERVE_DATA_FILES: "yes"
     ports:
-      - "9000:9000"
+      - "9090:9000"
       - "5700:5700"
     volumes:
       - ../coolq:/home/user/coolq
@@ -17,13 +17,13 @@ services:
     container_name: sprout
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockfile-sprout
     restart: always
     environment:
-      SUPER_ACCOUNT: 1111111111 # change to own super account
+      SUPER_ACCOUNT: 172950203 # change to own super account
     ports:
       - "8888:8888"
     volumes:
-      - ../python:/data/python
+      - ../../sprout:/data/sprout
     depends_on:
       - cqhttp

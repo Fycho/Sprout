@@ -1,5 +1,5 @@
 import json, re, aiohttp
-
+from sprout.helpers import is_number
 
 async def run(bot, ctx, cmd, arg) -> None:
     if not arg:
@@ -10,23 +10,6 @@ async def run(bot, ctx, cmd, arg) -> None:
             args.append(0)
         weather_report = await get_weather_of_city(args[0], args[1])
         await bot.send(ctx, weather_report)
-
-
-def is_number(s):
-    try:
-        float(s)
-        return True
-    except ValueError:
-        pass
-
-    try:
-        import unicodedata
-        unicodedata.numeric(s)
-        return True
-    except (TypeError, ValueError):
-        pass
-
-    return False
 
 
 async def get_weather_of_city(city: str, day) -> str:
