@@ -41,9 +41,12 @@ async def handle_list_message(bot, ctx):
     for i in items:
         message += '【' + str(i['vid']) + '】' + i['name_zh'] + '\n'
 
-    # 后期整合进/help, 嗯，先这样吧
-    message += '指令帮助：\n/vtb now - 查看现在有哪些虚拟主播在bilibili直播\n/vtb mylist - 查看已订阅主播\n/vtb subscribe <编号> - 订阅该主播 \n/vtb unsubscribe <编号> - 取消订阅该主播 \n/vtb subscribe all - 一键订阅全部 \n/vtb unsubscribe all - 一键取消所有订阅'
+    return await bot.send(ctx, message)
 
+
+async def handle_help(bot, ctx):
+    # 后期整合进/help, 嗯，先这样吧
+    message = '指令帮助：\n/vtb now - 查看现在有哪些虚拟主播在bilibili直播\n/vtb mylist - 查看已订阅主播\n/vtb subscribe <编号> - 订阅该主播 \n/vtb unsubscribe <编号> - 取消订阅该主播 \n/vtb subscribe all - 一键订阅全部 \n/vtb unsubscribe all - 一键取消所有订阅\n/vtb help - 本帮助'
     return await bot.send(ctx, message)
 
 
@@ -144,6 +147,8 @@ async def run(bot, ctx, cmd, arg) -> None:
         return await handle_unsubscribe(bot, ctx, sub_arg)
     elif sub_cmd == 'now':
         return await handle_query_status(bot, ctx)
+    elif sub_cmd == 'help':
+        return await handle_help(bot, ctx)
     else:
         return
 
