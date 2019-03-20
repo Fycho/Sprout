@@ -1,10 +1,6 @@
-import sqlite3, re, json, threading, time, aiohttp
+import sqlite3, re, json, aiohttp
+import config
 from sprout.helpers import is_number
-
-room_url = 'https://live.bilibili.com/'
-api_url = 'https://api.live.bilibili.com/room/v1/Room/get_info?id='
-db = '/Users/feiyan/workspace/python/sprout/sprout/db/sprout.db'
-# db = '/data/sprout/sprout/db/sprout.db'
 
 vtb_list = (
     {'vid': 1, 'name_zh': 'AIchannel', 'room_b': '1485080'},
@@ -28,41 +24,41 @@ vtb_list = (
     {'vid': 19, 'name_zh': '静凛', 'room_b': '21302352'},
     {'vid': 20, 'name_zh': '椎名唯华', 'room_b': '21302469'},
     {'vid': 21, 'name_zh': '【游戏部企划】梦咲枫', 'room_b': '6586670'},
+    {'vid': 22, 'name_zh': '白音小雪', 'room_b': '6241497'}
 )
 
 
 async def handle_list_message(bot, ctx):
-    connect = sqlite3.connect(db)
-    connect.row_factory = sqlite3.Row
-    c = connect.cursor()
+    with sqlite3.connect(bot.config.db) as connect:
+        connect.row_factory = sqlite3.Row
+        c = connect.cursor()
 
-    c.execute('SELECT * FROM vtb')
-    rows = c.fetchall()
-    items = list(map(lambda row: dict(zip([d[0] for d in c.description], row)), rows))
-    connect.close()
+        c.execute('SELECT * FROM vtb')
+        rows = c.fetchall()
+        items = list(map(lambda row: dict(zip([d[0] for d in c.description], row)), rows))
+
     message = '【Virtual Youtuber bilibili 开播提醒】可供订阅的Virtual Youtuber 列表：\n'
     for i in items:
         message += '【' + str(i['vid']) + '】' + i['name_zh'] + '\n'
 
     # 后期整合进/help, 嗯，先这样吧
-    message += '指令帮助：\n/vtb now - 查看现在有哪些虚拟主播在bilibili直播\n/vtb me - 查看已订阅主播\n/vtb add <编号> - 订阅该主播 \n/vtb remove <编号> - 取消订阅该主播 \n/vtb add all - 一键订阅全部 \n/vtb remove all - 一键取消所有订阅'
+    message += '指令帮助：\n/vtb now - 查看现在有哪些虚拟主播在bilibili直播\n/vtb mylist - 查看已订阅主播\n/vtb subscribe <编号> - 订阅该主播 \n/vtb unsubscribe <编号> - 取消订阅该主播 \n/vtb subscribe all - 一键订阅全部 \n/vtb unsubscribe all - 一键取消所有订阅'
 
     message += '\n通知推送功能暂未开放'
 
-    flush_notice_polling(bot)
     return await bot.send(ctx, message)
 
 
 async def query_my_subscription(bot, ctx):
     user_id = ctx['user_id']
-    connect = sqlite3.connect(db)
-    c = connect.cursor()
-    c.execute(
-        'SELECT us.user_id,us.vid,v.name_zh FROM user_subscribe as us LEFT JOIN vtb as v ON v.vid=us.vid WHERE us.user_id=' + str(
-            user_id)
-    )
-    rows = c.fetchall()
-    items = list(map(lambda row: dict(zip([d[0] for d in c.description], row)), rows))
+    with sqlite3.connect(bot.config.db) as connect:
+        c = connect.cursor()
+        c.execute(
+            'SELECT us.user_id,us.vid,v.name_zh FROM user_subscribe as us LEFT JOIN vtb as v ON v.vid=us.vid WHERE us.user_id=' + str(
+                user_id)
+        )
+        rows = c.fetchall()
+        items = list(map(lambda row: dict(zip([d[0] for d in c.description], row)), rows))
 
     if len(items) == 0:
         message = '你没有订阅Virtual Youtuber'
@@ -71,7 +67,6 @@ async def query_my_subscription(bot, ctx):
         for i in items:
             message += '\n【' + str(i['vid']) + '】' + i['name_zh']
 
-    connect.close()
     return await bot.send(ctx, message=message, at_sender=True)
 
 
@@ -80,21 +75,17 @@ async def handle_subscribe(bot, ctx, sub_arg):
         return await bot.send(ctx, '缺少参数')
 
     user_id = ctx['user_id']
-    connect = sqlite3.connect(db)
-    connect.row_factory = sqlite3.Row
-    c = connect.cursor()
-    if sub_arg[0] == 'all':
-        data = list(map(lambda x: (user_id, x['vid']), vtb_list))
-        c.executemany('INSERT OR IGNORE INTO user_subscribe VALUES (?,?)', data)
+    with sqlite3.connect(bot.config.db) as connect:
+        connect.row_factory = sqlite3.Row
+        c = connect.cursor()
+        if sub_arg[0] == 'all':
+            data = list(map(lambda x: (user_id, x['vid']), vtb_list))
+            c.executemany('INSERT OR IGNORE INTO user_subscribe VALUES (?,?)', data)
+        else:
+            if is_number(sub_arg[0]) == False:
+                return await bot.send(ctx, message='参数只能是编号或者all', at_sender=True)
+            c.execute('INSERT OR IGNORE INTO user_subscribe VALUES (?,?)', [user_id, sub_arg[0]])
 
-    else:
-        if is_number(sub_arg[0]) == False:
-            return await bot.send(ctx, message='参数只能是编号或者all', at_sender=True)
-
-        c.execute('INSERT OR IGNORE INTO user_subscribe VALUES (?,?)', [user_id, sub_arg[0]])
-
-    connect.commit()
-    connect.close()
     return await bot.send(ctx, message='成功订阅', at_sender=True)
 
 
@@ -102,17 +93,15 @@ async def handle_unsubscribe(bot, ctx, sub_arg):
     if len(sub_arg) == 0:
         return await bot.send(ctx, '缺少参数')
 
-    connect = sqlite3.connect(db)
-    c = connect.cursor()
-    if sub_arg[0] == 'all':
-        c.execute('DELETE FROM user_subscribe WHERE user_id=' + str(ctx['user_id']))
-    else:
-        if is_number(sub_arg[0]) == False:
-            return await bot.send(ctx, message='参数只能是编号或者all', at_sender=True)
-        c.execute('DELETE FROM user_subscribe WHERE user_id=' + str(ctx['user_id']) + ' AND vid=' + sub_arg[0])
+    with sqlite3.connect(bot.config.db) as connect:
+        c = connect.cursor()
+        if sub_arg[0] == 'all':
+            c.execute('DELETE FROM user_subscribe WHERE user_id=' + str(ctx['user_id']))
+        else:
+            if is_number(sub_arg[0]) == False:
+                return await bot.send(ctx, message='参数只能是编号或者all', at_sender=True)
+            c.execute('DELETE FROM user_subscribe WHERE user_id=' + str(ctx['user_id']) + ' AND vid=' + sub_arg[0])
 
-    connect.commit()
-    connect.close()
     return await bot.send(ctx, message='成功取消订阅', at_sender=True)
 
 
@@ -121,7 +110,7 @@ async def handle_query_status(bot, ctx):
     roundplaying_list = []
     for vtb in vtb_list:
         async with aiohttp.ClientSession() as session:
-            async with session.get(api_url + vtb['room_b']) as resp:
+            async with session.get(bot.config.api_url + vtb['room_b']) as resp:
                 resp_text = await resp.text()
                 result = json.loads(resp_text)
                 if result['data']['live_status'] == 1:
@@ -133,57 +122,12 @@ async def handle_query_status(bot, ctx):
 
     message = '正在bilibili直播的Virtural Youtuber：'
     for v in streaming_list:
-        message += '\n - ' + v[1] + '【' + room_url + v[0] + '】'
+        message += '\n - ' + v[1] + ' <' + bot.config.room_url + v[0] + '>'
 
     message += '\n正在bilibili轮播的Virtural Youtuber：'
     for v in roundplaying_list:
-        message += '\n - ' + v[1] + '【' + room_url + v[0] + '】'
+        message += '\n - ' + v[1] + ' <' + bot.config.room_url + v[0] + '>'
     await bot.send(ctx, message=message)
-
-
-# 获取需要查询的房间
-def get_available_rooms() -> list:
-    connect = sqlite3.connect(db)
-    c = connect.cursor()
-    c.execute(
-        'SELECT user_subscribe.vid FROM user_subscribe LEFT JOIN vtb ON vtb.vid = user_subscribe.vid GROUP BY room_b')
-    items = c.fetchall()
-    connect.close()
-    return list(map(lambda i: i[0], items))
-
-
-# 重新初始化刷新查询方法
-def flush_notice_polling(bot):
-    room_ids = get_available_rooms()
-    # todo loop request live api to get live status
-    print(room_ids)
-
-
-# 获取该房间的订阅者
-def get_users_by_room(vid) -> list:
-    connect = sqlite3.connect(db)
-    c = connect.cursor()
-    c.execute(
-        'SELECT user_id FROM user_subscribe where vid=' + str(vid))
-    items = c.fetchall()
-    connect.close()
-    return list(map(lambda i: i[0], items))
-
-
-# 向该房间的订阅者发送消息
-async def send_message(bot, vid):
-    connect = sqlite3.connect(db)
-    connect.row_factory = sqlite3.Row
-    c = connect.cursor()
-    c.execute(
-        'SELECT * FROM vtb where vid=' + str(vid))
-    row = c.fetchone()
-    item = dict(zip([d[0] for d in c.description], row))
-    connect.close()
-    user_ids = get_users_by_room(vid)
-    for user_id in user_ids:
-        await bot.send_private_msg(user_id=user_id,
-                                   message='你订阅的' + item['name_zh'] + '开始直播：' + room_url + item['room_b'])
 
 
 async def run(bot, ctx, cmd, arg) -> None:
@@ -194,56 +138,45 @@ async def run(bot, ctx, cmd, arg) -> None:
     sub_cmd = args[0]
     sub_arg = args[1:]
 
-    if sub_cmd == 'me':
+    if sub_cmd == 'mylist':
         return await query_my_subscription(bot, ctx)
-    elif sub_cmd == 'add':
+    elif sub_cmd == 'subscribe':
         return await handle_subscribe(bot, ctx, sub_arg)
-    elif sub_cmd == 'remove':
+    elif sub_cmd == 'unsubscribe':
         return await handle_unsubscribe(bot, ctx, sub_arg)
     elif sub_cmd == 'now':
         return await handle_query_status(bot, ctx)
-    elif sub_cmd == 'testsendmsg':
-        return await send_message(bot, sub_arg[0])
     else:
         return
 
 
 def db_init():
-    connect = sqlite3.connect(db)
-    connect.row_factory = sqlite3.Row
-    c = connect.cursor()
+    with sqlite3.connect(config.db) as connect:
+        connect.row_factory = sqlite3.Row
+        c = connect.cursor()
 
-    connect.execute('''
-        CREATE TABLE IF NOT EXISTS vtb(
-            vid PRIMARY KEY,
-            name_zh TEXT,
-            room_b TEXT,
-            live_status INT
-        );
-    ''')
+        connect.execute('''
+            CREATE TABLE IF NOT EXISTS vtb(
+                vid PRIMARY KEY,
+                name_zh TEXT,
+                room_b TEXT,
+                live_status INT
+            );
+        ''')
 
-    connect.execute('''
-        CREATE TABLE IF NOT EXISTS user_subscribe(
-            user_id TEXT,
-            vid INT,
-            primary key(user_id, vid)
-        );
-    ''')
-    connect.commit()
+        connect.execute('''
+            CREATE TABLE IF NOT EXISTS user_subscribe(
+                user_id TEXT,
+                vid INT,
+                primary key(user_id, vid)
+            );
+        ''')
 
-    # init vtb list
-    data = list(map(lambda vtb: (vtb['vid'], vtb['name_zh'], vtb['room_b'], 0), vtb_list))
-    c.execute('DELETE FROM vtb')
-    c.executemany('INSERT INTO vtb VALUES (?,?,?,?)', data)
-    connect.commit()
-    connect.close()
-
-
-def fun():
-    print('hello, world')
+        # init vtb list
+        data = list(map(lambda vtb: (vtb['vid'], vtb['name_zh'], vtb['room_b'], 0), vtb_list))
+        c.execute('DELETE FROM vtb')
+        c.executemany('INSERT INTO vtb VALUES (?,?,?,?)', data)
 
 
 if __name__ == '__main__':
-    t = threading.Timer(5.0, fun)
-    t.start()
-    # db_init()
+    db_init()
