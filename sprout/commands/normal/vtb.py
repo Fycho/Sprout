@@ -44,8 +44,6 @@ async def handle_list_message(bot, ctx):
     # 后期整合进/help, 嗯，先这样吧
     message += '指令帮助：\n/vtb now - 查看现在有哪些虚拟主播在bilibili直播\n/vtb mylist - 查看已订阅主播\n/vtb subscribe <编号> - 订阅该主播 \n/vtb unsubscribe <编号> - 取消订阅该主播 \n/vtb subscribe all - 一键订阅全部 \n/vtb unsubscribe all - 一键取消所有订阅'
 
-    message += '\n通知推送功能暂未开放'
-
     return await bot.send(ctx, message)
 
 
