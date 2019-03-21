@@ -5,6 +5,7 @@ import sqlite3
 import aiohttp
 
 import config
+from sprout.log import logger
 
 
 # 获取需要查询的房间
@@ -42,12 +43,13 @@ async def initialize(bot):
 async def handler(bot, current_vtb, live_status_dict):
     async with aiohttp.ClientSession() as session:
         url = config.api_url + current_vtb['room_b']
+        logger.debug(f'Get live status from URL: {url}')
         async with session.get(url) as resp:
             resp_text = await resp.text()
             result = json.loads(resp_text)
             live_status = result['data']['live_status']
-            print(current_vtb['room_b'] + ':' + str(live_status))
             if current_vtb['room_b'] in live_status_dict and live_status == 1 and current_vtb['room_b'] != 1:
+                logger.debug(current_vtb['name_zh'] + '<' + current_vtb['room_b'] + '> started streaming.' )
                 await push_message(current_vtb['vid'], bot)
 
             live_status_dict[current_vtb['room_b']] = result['data']['live_status']
@@ -65,5 +67,6 @@ async def push_message(vid, bot):
 
     user_ids = get_users_by_room(vid)
     for user_id in user_ids:
+        logger.info('Notified user' + ': ' + str(user_id))
         await bot.send_private_msg(user_id=user_id,
                                    message='你订阅的' + item['name_zh'] + '开始直播：' + bot.config.room_url + item['room_b'])

@@ -3,6 +3,7 @@ from typing import Dict, Any
 
 su = os.environ.get('SUPER_ACCOUNT')
 
+DEBUG = True
 SUPER_USERS = {su}
 ADMIN_COMMANDS = {'ping', 'task'}
 NORMAL_COMMANDS = {'weather', 'vtb', 'roll', 'moegirl'}

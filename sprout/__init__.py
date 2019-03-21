@@ -1,9 +1,11 @@
+import logging
 from typing import Optional, Any
 
 from aiocqhttp import CQHttp
 
 from sprout.sched import Scheduler
 from .event_handler import *
+from .log import logger
 
 scheduler = Scheduler()
 
@@ -12,6 +14,11 @@ class Sprout(CQHttp):
     def __init__(self, config) -> None:
         super().__init__()
         self.config = config
+
+        if self.config.DEBUG:
+            logger.setLevel(logging.DEBUG)
+        else:
+            logger.setLevel(logging.INFO)
 
         @self.on_message
         async def _(ctx):
