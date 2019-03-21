@@ -32,8 +32,8 @@ def get_users_by_room(vid) -> list:
 
 async def initialize(bot):
     vtb_models = get_subscribed_rooms()
+    global _live_status_dict
     if not _live_status_dict:
-        global _live_status_dict
         _live_status_dict = dict()
 
     logger.debug(_live_status_dict)
