@@ -4,7 +4,6 @@ import sqlite3
 
 import aiohttp
 
-import config
 from sprout.helpers import is_number
 
 vtb_list = (
@@ -171,7 +170,7 @@ async def run(bot, ctx, cmd, arg) -> None:
 
 
 def db_init():
-    with sqlite3.connect(config.db) as connect:
+    with sqlite3.connect('/data/sprout/sprout/db/sprout.db') as connect:
         connect.row_factory = sqlite3.Row
         c = connect.cursor()
 
