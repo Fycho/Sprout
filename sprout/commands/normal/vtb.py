@@ -1,7 +1,8 @@
-import aiohttp
 import json
 import re
 import sqlite3
+
+import aiohttp
 
 import config
 from sprout.helpers import is_number
@@ -24,7 +25,7 @@ vtb_list = (
     {'vid': 15, 'name_zh': 'Mirai Akari', 'room_b': '850447'},
     {'vid': 16, 'name_zh': '田中姬铃木雏', 'room_b': '10209381'},
     {'vid': 17, 'name_zh': '虚拟女友Yomemi', 'room_b': '10363055'},
-    {'vid': 18, 'name_zh': '有栖茉奈', 'room_b': '3822389'},
+    {'vid': 18, 'name_zh': '有栖マナ', 'room_b': '3822389'},
     {'vid': 19, 'name_zh': '静凛', 'room_b': '21302352'},
     {'vid': 20, 'name_zh': '椎名唯华', 'room_b': '21302469'},
     {'vid': 21, 'name_zh': '【游戏部企划】梦咲枫', 'room_b': '6586670'},
