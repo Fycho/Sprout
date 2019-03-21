@@ -5,7 +5,7 @@ su = os.environ.get('SUPER_ACCOUNT')
 
 DEBUG = True
 SUPER_USERS = {su}
-ADMIN_COMMANDS = {'ping', 'task'}
+ADMIN_COMMANDS = {'ping', 'task', 'addvtb'}
 NORMAL_COMMANDS = {'info', 'weather', 'vtb', 'roll', 'moegirl'}
 
 APSCHEDULER_CONFIG: Dict[str, Any] = {

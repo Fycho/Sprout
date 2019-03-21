@@ -33,14 +33,18 @@ vtb_list = (
 )
 
 
-async def handle_list_message(bot, ctx):
+def get_vtb_list(bot):
     with sqlite3.connect(bot.config.db) as connect:
         connect.row_factory = sqlite3.Row
         c = connect.cursor()
 
         c.execute('SELECT * FROM vtb')
         rows = c.fetchall()
-        items = list(map(lambda row: dict(zip([d[0] for d in c.description], row)), rows))
+        return list(map(lambda row: dict(zip([d[0] for d in c.description], row)), rows))
+
+
+async def handle_list_message(bot, ctx):
+    items = get_vtb_list(bot)
 
     message = '【Virtual Youtuber bilibili 开播提醒】可供订阅的Virtual Youtuber 列表：'
     for i in items:
@@ -91,7 +95,8 @@ async def handle_subscribe(bot, ctx, sub_arg):
         connect.row_factory = sqlite3.Row
         c = connect.cursor()
         if sub_arg[0] == 'all':
-            data = list(map(lambda x: (user_id, x['vid']), vtb_list))
+            items = get_vtb_list(bot)
+            data = list(map(lambda x: (user_id, x['vid']), items))
             c.executemany('INSERT OR IGNORE INTO user_subscribe VALUES (?,?)', data)
         else:
             if is_number(sub_arg[0]) == False:
@@ -120,6 +125,7 @@ async def handle_unsubscribe(bot, ctx, sub_arg):
 async def handle_query_status(bot, ctx):
     streaming_list = []
     roundplaying_list = []
+    vtb_list = get_vtb_list(bot)
     for vtb in vtb_list:
         async with aiohttp.ClientSession() as session:
             async with session.get(bot.config.api_url + vtb['room_b']) as resp:
