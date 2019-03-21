@@ -57,5 +57,5 @@ def _start_scheduler():
 
 
 __all__ = [
-    'Sprout', 'scheduler', 'init', 'get_bot', 'run', 'app'
+    'Sprout', 'scheduler', 'init', 'get_bot', 'run'
 ]

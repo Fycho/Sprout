@@ -1,7 +1,8 @@
-import aiohttp
 import asyncio
 import json
 import sqlite3
+
+import aiohttp
 
 import config
 
@@ -34,8 +35,8 @@ async def initialize(bot):
     tasks = list()
     for current_vtb in vtb_models:
         tasks.append(asyncio.create_task(handler(bot, current_vtb, live_status_dict)))
-    for task in tasks:
-        await task
+
+    asyncio.gather(*tasks)
 
 
 async def handler(bot, current_vtb, live_status_dict):
