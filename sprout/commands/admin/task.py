@@ -12,18 +12,19 @@ async def run(bot: Sprout, ctx, cmd, arg) -> None:
         await bot.send(ctx, '已停止所有计划任务')
 
 def run_all_tasks(bot: Sprout):
-    schedule_list = ['vtb_subscribe']
-    for schedule_name in schedule_list:
-        schedule_module = importlib.import_module(f'sprout.schedules.{schedule_name}')
-        scheduler.add_job(
-            schedule_module.initialize,
-            id=schedule_name,
-            kwargs={'bot': bot},
-            trigger='interval',
-            replace_existing=True,
-            minutes=1,
-        )
+    run_vtb_notification(bot)
 
+
+def run_vtb_notification(bot: Sprout):
+    schedule_module = importlib.import_module('sprout.schedules.vtb_subscribe')
+    scheduler.add_job(
+        schedule_module.initialize,
+        id='vtb_subscribe',
+        kwargs={'bot': bot},
+        trigger='interval',
+        replace_existing=True,
+        minutes=1,
+    )
 def stop_all_tasks():
     jobs = scheduler.get_jobs()
     for job in jobs:

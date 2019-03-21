@@ -32,10 +32,14 @@ def get_users_by_room(vid) -> list:
 
 async def initialize(bot):
     vtb_models = get_subscribed_rooms()
-    live_status_dict = dict()
+    if not _live_status_dict:
+        global _live_status_dict
+        _live_status_dict = dict()
+
+    logger.debug(_live_status_dict)
     tasks = list()
     for current_vtb in vtb_models:
-        tasks.append(asyncio.create_task(handler(bot, current_vtb, live_status_dict)))
+        tasks.append(asyncio.create_task(handler(bot, current_vtb, _live_status_dict)))
 
     asyncio.gather(*tasks)
 
@@ -49,7 +53,7 @@ async def handler(bot, current_vtb, live_status_dict):
             result = json.loads(resp_text)
             live_status = result['data']['live_status']
             if current_vtb['room_b'] in live_status_dict and live_status == 1 and current_vtb['room_b'] != 1:
-                logger.debug(current_vtb['name_zh'] + '<' + current_vtb['room_b'] + '> started streaming.' )
+                logger.debug(current_vtb['name_zh'] + '<' + current_vtb['room_b'] + '> started streaming.')
                 await push_message(current_vtb['vid'], bot)
 
             live_status_dict[current_vtb['room_b']] = result['data']['live_status']
