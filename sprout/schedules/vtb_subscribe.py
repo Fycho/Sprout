@@ -48,7 +48,7 @@ async def handler(bot, current_vtb, live_status_dict):
             resp_text = await resp.text()
             result = json.loads(resp_text)
             live_status = result['data']['live_status']
-            if current_vtb['room_b'] in live_status_dict and live_status == 1 and current_vtb['room_b'] != 1:
+            if current_vtb['room_b'] in live_status_dict and live_status == 1 and live_status_dict[current_vtb['room_b']] != 1:
                 logger.debug(current_vtb['name_zh'] + '<' + current_vtb['room_b'] + '> started streaming.')
                 await push_message(current_vtb['vid'], bot)
 
