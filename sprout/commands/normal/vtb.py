@@ -6,32 +6,6 @@ import aiohttp
 
 from sprout.helpers import is_number
 
-vtb_list = (
-    {'vid': 1, 'name_zh': 'AIchannel', 'room_b': '1485080'},
-    {'vid': 2, 'name_zh': '白上吹雪', 'room_b': '11588230'},
-    {'vid': 3, 'name_zh': '夏色祭', 'room_b': '13946381'},
-    {'vid': 4, 'name_zh': '湊-阿库娅', 'room_b': '14917277'},
-    {'vid': 5, 'name_zh': '赤井心', 'room_b': '14275133'},
-    {'vid': 6, 'name_zh': '大神澪', 'room_b': '21133979'},
-    {'vid': 7, 'name_zh': '紫咲诗音', 'room_b': '21132965'},
-    {'vid': 8, 'name_zh': '神楽めあ', 'room_b': '12235923'},
-    {'vid': 9, 'name_zh': '犬山玉姬', 'room_b': '4634167'},
-    {'vid': 10, 'name_zh': '本间向日葵', 'room_b': '21302477'},
-    {'vid': 11, 'name_zh': '神楽七奈', 'room_b': '21304638'},
-    {'vid': 12, 'name_zh': '猫宫日向', 'room_b': '9286381'},
-    {'vid': 13, 'name_zh': '輝夜月', 'room_b': '7602132'},
-    {'vid': 14, 'name_zh': 'Overidea', 'room_b': '704808'},
-    {'vid': 15, 'name_zh': 'Mirai Akari', 'room_b': '850447'},
-    {'vid': 16, 'name_zh': '田中姬铃木雏', 'room_b': '10209381'},
-    {'vid': 17, 'name_zh': '虚拟女友Yomemi', 'room_b': '10363055'},
-    {'vid': 18, 'name_zh': '有栖マナ', 'room_b': '3822389'},
-    {'vid': 19, 'name_zh': '静凛', 'room_b': '21302352'},
-    {'vid': 20, 'name_zh': '椎名唯华', 'room_b': '21302469'},
-    {'vid': 21, 'name_zh': '【游戏部企划】梦咲枫', 'room_b': '6586670'},
-    {'vid': 22, 'name_zh': '白音小雪', 'room_b': '6241497'},
-    {'vid': 23, 'name_zh': '绿仙', 'room_b': '2077989'},
-)
-
 
 def get_vtb_list(bot):
     with sqlite3.connect(bot.config.db) as connect:
@@ -173,35 +147,3 @@ async def run(bot, ctx, cmd, arg) -> None:
         return await handle_help(bot, ctx)
     else:
         return
-
-
-def db_init():
-    with sqlite3.connect('/data/sprout/sprout/db/sprout.db') as connect:
-        connect.row_factory = sqlite3.Row
-        c = connect.cursor()
-
-        connect.execute('''
-            CREATE TABLE IF NOT EXISTS vtb(
-                vid PRIMARY KEY,
-                name_zh TEXT,
-                room_b TEXT,
-                live_status INT
-            );
-        ''')
-
-        connect.execute('''
-            CREATE TABLE IF NOT EXISTS user_subscribe(
-                user_id TEXT,
-                vid INT,
-                primary key(user_id, vid)
-            );
-        ''')
-
-        # init vtb list
-        data = list(map(lambda vtb: (vtb['vid'], vtb['name_zh'], vtb['room_b'], 0), vtb_list))
-        c.execute('DELETE FROM vtb')
-        c.executemany('INSERT INTO vtb VALUES (?,?,?,?)', data)
-
-
-if __name__ == '__main__':
-    db_init()
