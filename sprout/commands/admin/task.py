@@ -14,7 +14,7 @@ async def run(bot: Sprout, ctx, cmd, arg) -> None:
 def run_all_tasks(bot: Sprout):
     schedule_list = ['vtb_subscribe']
     for schedule_name in schedule_list:
-        schedule_module = importlib.import_module(f'.schedules.{schedule_name}', __package__)
+        schedule_module = importlib.import_module(f'sprout.schedules.{schedule_name}')
         scheduler.add_job(
             schedule_module.initialize,
             id=schedule_name,
