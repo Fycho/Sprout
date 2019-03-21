@@ -1,4 +1,8 @@
-import sqlite3, re, json, aiohttp
+import aiohttp
+import json
+import re
+import sqlite3
+
 import config
 from sprout.helpers import is_number
 
@@ -127,13 +131,16 @@ async def handle_query_status(bot, ctx):
                     # 轮播中
                     roundplaying_list.append((vtb['room_b'], vtb['name_zh']))
 
-    message = '正在bilibili直播的Virtural Youtuber：'
-    for v in streaming_list:
-        message += '\n - ' + v[1] + ' <' + bot.config.room_url + v[0] + '>'
+    if len(streaming_list) < 1:
+        message = '现在没有Virtural Youtuber在bilibili直播'
+    else:
+        message = '正在bilibili直播的Virtural Youtuber：'
+        for v in streaming_list:
+            message += '\n - ' + v[1] + ' <' + bot.config.room_url + v[0] + '>'
 
-    message += '\n正在bilibili轮播的Virtural Youtuber：'
-    for v in roundplaying_list:
-        message += '\n - ' + v[1] + ' <' + bot.config.room_url + v[0] + '>'
+    # message += '\n正在bilibili轮播的Virtural Youtuber：'
+    # for v in roundplaying_list:
+    #     message += '\n - ' + v[1] + ' <' + bot.config.room_url + v[0] + '>'
     await bot.send(ctx, message=message)
 
 

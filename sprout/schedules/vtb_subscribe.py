@@ -1,11 +1,13 @@
-import sqlite3, json, requests, time, asyncio
-import config
+import aiohttp
+import asyncio
+import json
+import sqlite3
 
-sleep_time = 60
+import config
 
 
 # 获取需要查询的房间
-def get_available_rooms() -> list:
+def get_subscribed_rooms() -> list:
     with sqlite3.connect(config.db) as connect:
         c = connect.cursor()
         c.execute(
@@ -26,23 +28,28 @@ def get_users_by_room(vid) -> list:
     return list(map(lambda i: i[0], items))
 
 
-def initialize(bot):
-    observable = dict()
-    while True:
-        models = get_available_rooms()
-        for model in models:
-            # run task (todo test async way
-            url = config.api_url + model['room_b']
-            resp = requests.get(url)
-            result = json.loads(resp.text)
+async def initialize(bot):
+    vtb_models = get_subscribed_rooms()
+    live_status_dict = dict()
+    tasks = list()
+    for current_vtb in vtb_models:
+        tasks.append(asyncio.create_task(handler(bot, current_vtb, live_status_dict)))
+    for task in tasks:
+        await task
+
+
+async def handler(bot, current_vtb, live_status_dict):
+    async with aiohttp.ClientSession() as session:
+        url = config.api_url + current_vtb['room_b']
+        async with session.get(url) as resp:
+            resp_text = await resp.text()
+            result = json.loads(resp_text)
             live_status = result['data']['live_status']
-            print(model['room_b'] + ':' + str(live_status))
-            if model['room_b'] in observable and live_status == 1 and model['room_b'] != 1:
-                asyncio.run(push_message(model['vid'], bot))
+            print(current_vtb['room_b'] + ':' + str(live_status))
+            if current_vtb['room_b'] in live_status_dict and live_status == 1 and current_vtb['room_b'] != 1:
+                await push_message(current_vtb['vid'], bot)
 
-            observable[model['room_b']] = result['data']['live_status']
-
-        time.sleep(sleep_time)
+            live_status_dict[current_vtb['room_b']] = result['data']['live_status']
 
 
 # 向该房间的订阅者发送消息

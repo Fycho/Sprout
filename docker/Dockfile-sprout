@@ -2,6 +2,8 @@ FROM python:3.7.2-alpine3.8
 
 RUN pip install msgpack requests aiocqhttp
 
+RUN pip install apscheduler
+
 EXPOSE 8888
 
 CMD ["python", "/data/sprout/run.py"]

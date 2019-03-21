@@ -1,13 +1,16 @@
+from typing import Optional, Any
+
 from aiocqhttp import CQHttp
+
+from sprout.sched import Scheduler
 from .event_handler import *
-from typing import Optional
-import importlib, threading
+
+scheduler = Scheduler()
 
 
 class Sprout(CQHttp):
     def __init__(self, config) -> None:
         super().__init__()
-
         self.config = config
 
         @self.on_message
@@ -26,15 +29,33 @@ class Sprout(CQHttp):
         async def _(ctx):
             await handle_meta_event(self, ctx)
 
-    def run(self, host: Optional[str] = None, port: Optional[int] = None, *args, **kwargs):
-        run_schedule_tasks(self)
-        super().run(host=host, port=port, *args, **kwargs)
+
+_bot: Optional[Sprout] = None
 
 
-def run_schedule_tasks(bot):
-    schedules = ['vtb_subscribe']
-    for schedule in schedules:
-        task = importlib.import_module(f'.schedules.{schedule}', __package__)
-        t = threading.Thread(target=task.initialize, args=(bot,), name=schedule)
-        t.setDaemon(True)
-        t.start()
+def get_bot() -> Sprout:
+    if _bot is None:
+        raise ValueError('Sprout instance has not been initialized')
+    return _bot
+
+
+def run(host: Optional[str] = None, port: Optional[int] = None, *args, **kwargs):
+    get_bot().run(host=host, port=port, *args, **kwargs)
+
+
+def init(config_object: Optional[Any] = None) -> None:
+    global _bot
+    _bot = Sprout(config_object)
+
+    _bot.server_app.before_serving(_start_scheduler)
+
+
+def _start_scheduler():
+    if scheduler and not scheduler.running:
+        scheduler.configure(_bot.config.APSCHEDULER_CONFIG)
+        scheduler.start()
+
+
+__all__ = [
+    'Sprout', 'scheduler', 'init', 'get_bot', 'run', 'app'
+]

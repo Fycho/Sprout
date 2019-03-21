@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from sprout import Sprout
 import config
+from sprout import *
 
-sprout = Sprout(config)
-app = sprout.server_app
+sprout = init(config)
+app = get_bot().server_app
 
 
 @app.route('/admin')
@@ -14,5 +14,6 @@ async def admin():
 powered by Fycho.
     '''
 
+
 if __name__ == '__main__':
-    sprout.run(host='0.0.0.0', port=8888)
+    run(host='0.0.0.0', port=8888)

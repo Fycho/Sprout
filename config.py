@@ -1,11 +1,17 @@
 import os
+from typing import Dict, Any
 
 su = os.environ.get('SUPER_ACCOUNT')
 
 SUPER_USERS = {su}
-ADMIN_COMMANDS = {'ping'}
+ADMIN_COMMANDS = {'ping', 'task'}
 NORMAL_COMMANDS = {'weather', 'vtb', 'roll', 'moegirl'}
+
+APSCHEDULER_CONFIG: Dict[str, Any] = {
+    'apscheduler.timezone': 'Asia/Shanghai'
+}
 
 room_url = 'https://live.bilibili.com/'
 api_url = 'https://api.live.bilibili.com/room/v1/Room/get_info?id='
-db = '/data/sprout/sprout/db/sprout.db'
+# db = '/data/sprout/sprout/db/sprout.db'
+db = '/Users/feiyan/workspace/python/sprout/sprout/db/sprout.db'
