@@ -43,7 +43,6 @@ async def initialize(bot, live_status_dict):
 async def handler(bot, current_vtb, live_status_dict):
     async with aiohttp.ClientSession() as session:
         url = config.api_url + current_vtb['room_b']
-        logger.debug(f'Get live status from URL: {url}')
         async with session.get(url) as resp:
             resp_text = await resp.text()
             result = json.loads(resp_text)
