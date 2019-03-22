@@ -6,7 +6,7 @@ su = os.environ.get('SUPER_ACCOUNT')
 DEBUG = True
 SUPER_USERS = {su}
 ADMIN_COMMANDS = {'ping', 'task', 'addvtb'}
-NORMAL_COMMANDS = {'info', 'weather', 'vtb', 'roll', 'moegirl'}
+NORMAL_COMMANDS = {'info', 'weather', 'vtb', 'roll', 'moegirl', 'remind'}
 
 APSCHEDULER_CONFIG: Dict[str, Any] = {
     'apscheduler.timezone': 'Asia/Shanghai'
