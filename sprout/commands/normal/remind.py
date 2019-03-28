@@ -7,7 +7,7 @@ async def run(bot, ctx, cmd, arg) -> None:
     if not arg:
         return await bot.send(ctx, message='缺少参数', at_sender=True)
 
-    matched = re.match(r'^(\w+|:)\s+(.*?)$', arg)
+    matched = re.match(r'^(\w*:?\w+?:?\w+?)\s+(.*?)$', arg)
     if matched:
         time = matched.group(1)
         msg = matched.group(2)
