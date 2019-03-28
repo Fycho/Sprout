@@ -7,7 +7,7 @@ async def run(bot, ctx, cmd, arg) -> None:
     if not arg:
         return await bot.send(ctx, message='缺少参数', at_sender=True)
 
-    matched = re.match(r'^(\w+)\s+(.*?)$', arg)
+    matched = re.match(r'^(\w+|:)\s+(.*?)$', arg)
     if matched:
         time = matched.group(1)
         msg = matched.group(2)
@@ -22,9 +22,9 @@ async def run(bot, ctx, cmd, arg) -> None:
         return await bot.send(ctx, message='缺少参数或者参数不合法', at_sender=True)
 
     notice_time = datetime.datetime.now() + datetime.timedelta(seconds=seconds)
-    formatted = notice_time.strftime('%Y年%m月%d日 %H:%M:%S')
+    formatted = notice_time.strftime('%Y年%m月%d日%H时%M分%S秒')
     delayed_task = asyncio.create_task(delay(bot, ctx, seconds, msg))
-    reply_task = bot.send(ctx, message=f'收到，会在{formatted}s提醒你：{msg}', at_sender=True)
+    reply_task = bot.send(ctx, message=f'收到，会在{formatted}提醒你：{msg}', at_sender=True)
     asyncio.gather(delayed_task, reply_task)
 
 
@@ -74,4 +74,3 @@ def parse_time(str) -> int:
 
     delta = d2 - now
     return delta.seconds
-
