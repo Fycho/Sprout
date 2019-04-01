@@ -16,7 +16,7 @@ async def run(bot, ctx, cmd, arg) -> None:
         message += '我赢了！'
 
     elif result == 0:
-        message += '是平局'
+        message += '是平局！'
 
     elif result == 2:
         message += '你赢了！'
