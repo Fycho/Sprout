@@ -1,12 +1,12 @@
 import os
-from typing import Dict, Any
+from typing import Any, Dict
 
 su = os.environ.get('SUPER_ACCOUNT')
 
-DEBUG = True
+DEBUG = False
 SUPER_USERS = {su}
 ADMIN_COMMANDS = {'ping', 'task', 'addvtb'}
-NORMAL_COMMANDS = {'info', 'weather', 'vtb', 'roll', 'moegirl', 'remind'}
+NORMAL_COMMANDS = {'weather', 'vtb', 'roll', 'moegirl', 'remind', 'help', 'rps'}
 
 APSCHEDULER_CONFIG: Dict[str, Any] = {
     'apscheduler.timezone': 'Asia/Shanghai'

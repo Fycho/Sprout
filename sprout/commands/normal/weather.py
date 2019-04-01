@@ -1,5 +1,9 @@
-import json, re, aiohttp
+import aiohttp
+import json
+import re
+
 from sprout.helpers import is_number
+
 
 async def run(bot, ctx, cmd, arg) -> None:
     if not arg:
@@ -13,7 +17,7 @@ async def run(bot, ctx, cmd, arg) -> None:
 
 
 async def get_weather_of_city(city: str, day) -> str:
-    if is_number(day) == False or day > 6:
+    if is_number(day) == False or int(day) > 6:
         day = 0
 
     day_label = ('今天', '明天', '后天', '大后天', '大大后天', '大大大后天')

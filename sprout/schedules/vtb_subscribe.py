@@ -32,7 +32,6 @@ def get_users_by_room(vid) -> list:
 
 async def initialize(bot, live_status_dict):
     vtb_models = get_subscribed_rooms()
-    logger.debug(live_status_dict)
     tasks = list()
     for current_vtb in vtb_models:
         tasks.append(asyncio.create_task(handler(bot, current_vtb, live_status_dict)))
