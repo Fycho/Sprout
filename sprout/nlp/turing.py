@@ -1,13 +1,14 @@
-import aiohttp
 import json
 import os
 import re
+
+import aiohttp
 
 API_KEY = os.environ.get('TURING_KEY')
 API_URL = 'http://openapi.tuling123.com/openapi/api/v2'
 
 
-async def fetch_turing_results(user_id: int, input: str) -> dict:
+async def fetch_turing_results(user_id: int, input: str):
     request_params = {
         "reqType": 0,
         "perception": {
