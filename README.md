@@ -1,3 +1,3 @@
 # SproutBOT
 
-基于cqhttp python api
+## docker and docker-compose required
