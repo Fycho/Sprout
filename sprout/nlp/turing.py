@@ -8,7 +8,7 @@ API_KEY = os.environ.get('TURING_KEY')
 API_URL = 'http://openapi.tuling123.com/openapi/api/v2'
 
 
-async def fetch_turing_results(user_id: int, input: str):
+async def fetch_turing_results(user_id: int, input: str) -> dict:
     request_params = {
         "reqType": 0,
         "perception": {
@@ -41,9 +41,9 @@ async def handle_turing_api(bot, ctx) -> bool:
         if 'results' in resp:
             for i, group in enumerate(resp['results']):
                 if i == 0:
-                    message += group['values'][group.resultType]
+                    message += group['values'][group['resultType']]
                 else:
-                    message += '\n' + group['values'][group.resultType]
+                    message += '\n' + group['values'][group['resultType']]
 
             await bot.send(ctx, message)
             return True
