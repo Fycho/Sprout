@@ -68,16 +68,18 @@ async def handle_subscribe(bot, ctx, sub_arg):
     with sqlite3.connect(bot.config.db) as connect:
         connect.row_factory = sqlite3.Row
         c = connect.cursor()
+        items = get_vtb_list(bot)
+        data = list(map(lambda x: (user_id, x['vid']), items))
         if sub_arg[0] == 'all':
-            items = get_vtb_list(bot)
-            data = list(map(lambda x: (user_id, x['vid']), items))
             c.executemany('INSERT OR IGNORE INTO user_subscribe VALUES (?,?)', data)
         else:
             if is_number(sub_arg[0]) == False:
                 return await bot.send(ctx, message='参数只能是编号或者all', at_sender=True)
+            if sub_arg[0] not in data:
+                return await bot.send(ctx, message='你订阅了不存在的vtb', at_sender=True)
             c.execute('INSERT OR IGNORE INTO user_subscribe VALUES (?,?)', [user_id, sub_arg[0]])
 
-    return await bot.send(ctx, message='成功订阅', at_sender=True)
+    return await bot.send(ctx, message='成功订阅（如已订阅请忽略）', at_sender=True)
 
 
 async def handle_unsubscribe(bot, ctx, sub_arg):
@@ -93,7 +95,7 @@ async def handle_unsubscribe(bot, ctx, sub_arg):
                 return await bot.send(ctx, message='参数只能是编号或者all', at_sender=True)
             c.execute('DELETE FROM user_subscribe WHERE user_id=' + str(ctx['user_id']) + ' AND vid=' + sub_arg[0])
 
-    return await bot.send(ctx, message='成功取消订阅', at_sender=True)
+    return await bot.send(ctx, message='成功取消订阅（如未订阅请忽略）', at_sender=True)
 
 
 async def handle_query_status(bot, ctx):
