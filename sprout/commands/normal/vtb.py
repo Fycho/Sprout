@@ -12,7 +12,7 @@ def get_vtb_list(bot):
         connect.row_factory = sqlite3.Row
         c = connect.cursor()
 
-        c.execute('SELECT * FROM vtb')
+        c.execute('SELECT * FROM vtb ORDER BY vid ASC')
         rows = c.fetchall()
         return list(map(lambda row: dict(zip([d[0] for d in c.description], row)), rows))
 
