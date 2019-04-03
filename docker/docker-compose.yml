@@ -22,6 +22,7 @@ services:
     restart: always
     environment:
       SUPER_ACCOUNT: 172950203 # change to own super account
+      TURING_KEY: 4588c3b24f214343985fbdae2a3aef46
     ports:
       - "8888:8888"
     volumes:

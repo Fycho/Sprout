@@ -1,6 +1,9 @@
-import re, importlib
-from .log import logger
+import importlib
+import re
 from typing import Tuple
+
+from sprout.nlp.turing import handle_turing_api
+from .log import logger
 
 
 async def handle_message(bot, ctx) -> None:
@@ -57,7 +60,8 @@ async def _handle_normal_command(bot, ctx, cmd, arg) -> bool:
 
 
 async def handle_natural_language(bot, ctx) -> bool:
-    pass
+    handled = await handle_turing_api(bot, ctx)
+    return handled
 
 
 def parse_command(message) -> Tuple:
