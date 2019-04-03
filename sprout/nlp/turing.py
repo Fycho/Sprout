@@ -1,6 +1,7 @@
+import asyncio
 import json
 import os
-import re
+import random
 
 import aiohttp
 
@@ -32,22 +33,28 @@ async def fetch_turing_results(user_id: int, input: str) -> dict:
 
 
 async def handle_turing_api(bot, ctx) -> bool:
+    rnd = random.random()
+    if rnd > 0.05:
+        return False
+
     message = ctx['message']
     user_id = ctx['user_id']
-    pattern = '|'.join(bot.config.NLP_DICT)
-    matched = re.findall(pattern, message)
 
-    if len(matched) > 0:
-        resp = await fetch_turing_results(user_id, message)
-        message = ''
-        if 'results' in resp:
-            for i, group in enumerate(resp['results']):
-                if i == 0:
-                    message += group['values'][group['resultType']]
-                else:
-                    message += '\n' + group['values'][group['resultType']]
+    resp = await fetch_turing_results(user_id, message)
 
-            await bot.send(ctx, message)
-            return True
+    if resp['intent']['code'] == 4003 or resp['intent']['code'] != 10004:
+        return False
+
+    message = ''
+    if 'results' in resp:
+        for i, group in enumerate(resp['results']):
+            if i == 0:
+                message += group['values'][group['resultType']]
+            else:
+                message += '\n' + group['values'][group['resultType']]
+
+        await asyncio.sleep(5)
+        await bot.send(ctx, message)
+        return True
 
     return False

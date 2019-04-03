@@ -8,7 +8,6 @@ SUPER_USERS = {su}
 ADMIN_COMMANDS = {'ping', 'task', 'addvtb'}
 NORMAL_COMMANDS = {'weather', 'vtb', 'roll', 'moegirl', 'remind', 'help', 'rps'}
 
-NLP_DICT: list = ['fuckturing']
 APSCHEDULER_CONFIG: Dict[str, Any] = {
     'apscheduler.timezone': 'Asia/Shanghai'
 }
