@@ -46,15 +46,17 @@ async def handler(bot, current_vtb, live_status_dict):
             resp_text = await resp.text()
             result = json.loads(resp_text)
             live_status = result['data']['live_status']
-            if current_vtb['room_b'] in live_status_dict and live_status == 1 and live_status_dict[current_vtb['room_b']] != 1:
+            title = result['data']['title']
+            if current_vtb['room_b'] in live_status_dict and live_status == 1 and live_status_dict[
+                current_vtb['room_b']] != 1:
                 logger.debug(current_vtb['name_zh'] + '<' + current_vtb['room_b'] + '> started streaming.')
-                await push_message(current_vtb['vid'], bot)
+                await push_message(current_vtb['vid'], title, bot)
 
             live_status_dict[current_vtb['room_b']] = result['data']['live_status']
 
 
 # 向该房间的订阅者发送消息
-async def push_message(vid, bot):
+async def push_message(vid, title, bot):
     with sqlite3.connect(bot.config.db) as connect:
         connect.row_factory = sqlite3.Row
         c = connect.cursor()
@@ -66,5 +68,5 @@ async def push_message(vid, bot):
     user_ids = get_users_by_room(vid)
     for user_id in user_ids:
         logger.info('Notified user' + ': ' + str(user_id))
-        await bot.send_private_msg(user_id=user_id,
-                                   message='你订阅的' + item['name_zh'] + '开始直播：' + bot.config.room_url + item['room_b'])
+        message = '你订阅的' + item['name_zh'] + '开始直播：' + bot.config.room_url + item['room_b'] + '。标题：' + title
+        await bot.send_private_msg(user_id=user_id, message=message)

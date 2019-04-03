@@ -1,10 +1,11 @@
+import aiohttp
+import json
 from random import choice
 from urllib import parse
-import json, aiohttp
 
 
 class MoeApi:
-    danbooru_pool = ('https://konachan.net', 'https://yande.re')
+    danbooru_pool = ['https://konachan.net']
     popular_path = '/post/popular_recent.json'
     search_path = '/post.json'
 
