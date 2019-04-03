@@ -32,11 +32,13 @@ async def fetch_turing_results(user_id: int, input: str) -> dict:
 
 
 async def handle_turing_api(bot, ctx) -> bool:
+    message = ctx['message']
+    user_id = ctx['user_id']
     pattern = '|'.join(bot.config.NLP_DICT)
-    matched = re.findall(pattern, ctx['message'])
+    matched = re.findall(pattern, message)
 
     if len(matched) > 0:
-        resp = await fetch_turing_results(ctx['user_id'], ctx['message'])
+        resp = await fetch_turing_results(user_id, message)
         message = ''
         if 'results' in resp:
             for i, group in enumerate(resp['results']):

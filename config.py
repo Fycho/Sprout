@@ -8,7 +8,7 @@ SUPER_USERS = {su}
 ADMIN_COMMANDS = {'ping', 'task', 'addvtb'}
 NORMAL_COMMANDS = {'weather', 'vtb', 'roll', 'moegirl', 'remind', 'help', 'rps'}
 
-NLP_DICT: tuple = ('豆芽菜', '？', '吃饭', '什么', '谁', '问', '睡觉', '玩', '几', '在哪', '有吗')
+NLP_DICT: tuple = ()
 APSCHEDULER_CONFIG: Dict[str, Any] = {
     'apscheduler.timezone': 'Asia/Shanghai'
 }
