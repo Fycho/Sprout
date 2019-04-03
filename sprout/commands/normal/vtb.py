@@ -69,13 +69,14 @@ async def handle_subscribe(bot, ctx, sub_arg):
         connect.row_factory = sqlite3.Row
         c = connect.cursor()
         items = get_vtb_list(bot)
-        data = list(map(lambda x: (user_id, x['vid']), items))
+        vid_list = list(map(lambda x: x['vid'], items))
         if sub_arg[0] == 'all':
+            data = list(map(lambda x: (user_id, x['vid']), items))
             c.executemany('INSERT OR IGNORE INTO user_subscribe VALUES (?,?)', data)
         else:
             if is_number(sub_arg[0]) == False:
                 return await bot.send(ctx, message='参数只能是编号或者all', at_sender=True)
-            if int(sub_arg[0]) not in data:
+            if int(sub_arg[0]) not in vid_list:
                 return await bot.send(ctx, message='你订阅了不存在的vtb', at_sender=True)
             c.execute('INSERT OR IGNORE INTO user_subscribe VALUES (?,?)', [user_id, sub_arg[0]])
 
