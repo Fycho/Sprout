@@ -4,6 +4,8 @@ RUN pip install msgpack requests aiocqhttp
 
 RUN pip install apscheduler
 
+RUN pip install numpy
+
 EXPOSE 8888
 
 CMD ["python", "/data/sprout/run.py"]
