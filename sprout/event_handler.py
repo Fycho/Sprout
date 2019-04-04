@@ -2,6 +2,7 @@ import importlib
 import re
 from typing import Tuple
 
+from sprout.nlp.omok_place import handle_omok
 from sprout.nlp.turing import handle_turing_api
 from .log import logger
 
@@ -60,6 +61,10 @@ async def _handle_normal_command(bot, ctx, cmd, arg) -> bool:
 
 
 async def handle_natural_language(bot, ctx) -> bool:
+    handled = await handle_omok(bot, ctx)
+    if handled:
+        return handled
+
     handled = await handle_turing_api(bot, ctx)
     return handled
 

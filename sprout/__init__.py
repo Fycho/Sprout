@@ -4,6 +4,7 @@ from typing import Any, Optional
 
 from aiocqhttp import CQHttp
 
+from sprout.game.omok_game import OmokGame
 from sprout.sched import Scheduler
 from .event_handler import *
 from .log import logger
@@ -37,6 +38,8 @@ class Sprout(CQHttp):
         async def _(ctx):
             await handle_meta_event(self, ctx)
 
+        self.omok_instance = OmokGame()
+
     def start_all_tasks(self):
         _run_vtb_notification(self)
 
@@ -65,6 +68,7 @@ def init(config_object: Optional[Any] = None) -> None:
 
     _bot.server_app.before_serving(_start_scheduler)
     _bot.server_app.after_serving(_bot.start_all_tasks)
+
 
 def _start_scheduler():
     if scheduler and not scheduler.running:
