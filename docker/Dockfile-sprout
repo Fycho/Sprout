@@ -4,6 +4,8 @@ RUN pip install msgpack requests aiocqhttp
 
 RUN pip install apscheduler
 
+RUN apk add gcc g++ make libffi-dev openssl-dev
+
 RUN pip install numpy
 
 EXPOSE 8888
