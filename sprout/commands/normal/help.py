@@ -14,6 +14,8 @@ async def run(bot, ctx, cmd, arg) -> None:
     * 顾名思义，摇点。如果内容参数以概率为结尾的则会使用random.org的真随机数。
 - /weather [城市名] <天>
     * 查询对应城市的天气预报，如果没有天数参数则默认当天。参数天的含义：0为今天，1为明天，2为后天，以此类推，只能预测5天。
+- /omok
+    * 五子棋游戏
 - /rps [剪刀|石头|布]
     * 和豆芽菜玩猜拳。'''
     await bot.send(ctx, message=message)

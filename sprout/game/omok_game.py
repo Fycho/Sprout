@@ -6,14 +6,18 @@ class OmokGame:
     max_player: int = 2
     win_size: int = 5
     players: list = []
-    position_i: tuple = ('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o')
+    position_i: tuple = ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O')
     position_j: tuple = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15')
+    position_i_f: tuple = ('Ａ', 'Ｂ', 'Ｃ', 'Ｄ', 'Ｅ', 'Ｆ', 'Ｇ', 'Ｈ', 'Ｉ', 'Ｊ', 'Ｋ', 'Ｌ', 'Ｍ', 'Ｎ', 'Ｏ')
+    position_j_f: tuple = ('１', '２', '３', '４', '５', '６', '７', '８', '９', '10', '11', '12', '13', '14', '15')
 
     def __init__(self) -> None:
         pass
 
     def init(self):
-        self.board =[[0] * self.board_size] * self.board_size
+        self.board = []
+        for i in range(self.board_size):
+            self.board.append([0] * self.board_size)
         self.players = []
         self.current_turn = 0
         self.win_status = False
@@ -27,14 +31,13 @@ class OmokGame:
     def place(self, ii, ij):
         self.board[ii][ij] = self.current_turn + 1
         if self.check_win(ii, ij):
-            self.win = True
+            self.win_status = True
 
     def change_turn(self):
         self.current_turn = (self.current_turn + 1) % self.max_player
 
-
     def check_win(self, i, j) -> bool:
-        piece = self.board[i, j]
+        piece = self.board[i][j]
         return self.check_vertical(piece, i, j) \
                or self.check_horizontal(piece, i, j) \
                or self.check_diagonal1(piece, i, j) \
@@ -61,7 +64,7 @@ class OmokGame:
             count += 1
             coord -= 1
 
-        coord = i + 1
+        coord = j + 1
         while coord < len(self.board) and self.board[i][coord] == piece:
             count += 1
             coord += 1
@@ -78,7 +81,7 @@ class OmokGame:
             y_coord -= 1
 
         x_coord = i + 1
-        y_coord = i + 1
+        y_coord = j + 1
         while x_coord < len(self.board) and y_coord < len(self.board) and self.board[x_coord][y_coord] == piece:
             count += 1
             x_coord += 1
@@ -105,26 +108,24 @@ class OmokGame:
         return count >= self.win_size
 
     def format_output(self):
-        result = '|   | '
+        result = '｜　｜'
         for i in range(0, self.board_size):
-            num = self.position_j[i]
-            if int(num) < 10:
-                num += ' '
-            result += num + '| '
+            num = self.position_j_f[i]
+            result += num + '｜'
 
         result += '\n'
 
         for i in range(0, self.board_size):
-            char = self.position_i[i]
-            result += '| ' + char + ' | '
+            char = self.position_i_f[i]
+            result += '｜' + char + '｜'
             for j in range(0, self.board_size):
-                sig = ' '
+                sig = '　'
                 if self.board[i][j] == 1:
-                    sig = 'O'
+                    sig = 'Ｏ'
                 elif self.board[i][j] == 2:
-                    sig = 'X'
+                    sig = 'Ｘ'
 
-                result += sig + ' | '
+                result += sig + '｜'
 
             result += '\n'
 
