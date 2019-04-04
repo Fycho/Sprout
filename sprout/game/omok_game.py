@@ -1,5 +1,3 @@
-import numpy as np
-
 # 一些规则
 # 先手O，后手X。
 # 棋子数据0：无子，1：O，2：X
@@ -15,7 +13,7 @@ class OmokGame:
         pass
 
     def init(self):
-        self.board = np.zeros([OmokGame.board_size, OmokGame.board_size], dtype=int)
+        self.board =[[0] * self.board_size] * self.board_size
         self.players = []
         self.current_turn = 0
         self.win_status = False
