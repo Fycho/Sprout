@@ -5,7 +5,7 @@ from sprout import Sprout
 
 async def run(bot: Sprout, ctx, cmd, arg) -> None:
     if not arg or arg == 'help':
-        message = '双人对战五子棋，确认加入/omok join，退出游戏/omok quit。一方加入后30秒内无另一方加入则自动退出。游戏开始后如一方30秒无输入则游戏自动结束。'
+        message = '【请在电脑上使用！！勿在手机上使用！！】双人对战五子棋，确认加入/omok join，退出游戏/omok quit。一方加入后30秒内无另一方加入则自动退出。游戏开始后如一方30秒无输入则游戏自动结束。'
         await bot.send(ctx, message=message)
 
     if arg == 'join':
