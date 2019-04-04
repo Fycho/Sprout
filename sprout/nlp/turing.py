@@ -34,7 +34,7 @@ async def fetch_turing_results(user_id: int, input: str) -> dict:
 
 async def handle_turing_api(bot, ctx) -> bool:
     rnd = random.random()
-    if rnd > 0.05:
+    if rnd > 0.03:
         return False
 
     message = ctx['message']
@@ -42,7 +42,7 @@ async def handle_turing_api(bot, ctx) -> bool:
 
     resp = await fetch_turing_results(user_id, message)
 
-    if resp['intent']['code'] == 4003 or resp['intent']['code'] != 10004:
+    if resp['intent']['code'] != 10004:
         return False
 
     message = ''

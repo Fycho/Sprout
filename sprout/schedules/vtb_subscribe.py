@@ -30,7 +30,7 @@ def get_users_by_room(vid) -> list:
     return list(map(lambda i: i[0], items))
 
 
-async def initialize(bot, live_status_dict):
+async def initialize(bot, live_status_dict) -> None:
     vtb_models = get_subscribed_rooms()
     tasks = list()
     for current_vtb in vtb_models:
@@ -39,7 +39,7 @@ async def initialize(bot, live_status_dict):
     asyncio.gather(*tasks)
 
 
-async def handler(bot, current_vtb, live_status_dict):
+async def handler(bot, current_vtb, live_status_dict) -> None:
     async with aiohttp.ClientSession() as session:
         url = config.api_url + current_vtb['room_b']
         async with session.get(url) as resp:
@@ -56,7 +56,7 @@ async def handler(bot, current_vtb, live_status_dict):
 
 
 # 向该房间的订阅者发送消息
-async def push_message(vid, title, bot):
+async def push_message(vid, title, bot) -> None:
     with sqlite3.connect(bot.config.db) as connect:
         connect.row_factory = sqlite3.Row
         c = connect.cursor()

@@ -1,7 +1,8 @@
-import aiohttp
 import json
 from random import choice
 from urllib import parse
+
+import aiohttp
 
 
 class MoeApi:
@@ -18,7 +19,6 @@ class MoeApi:
 
     async def popular(self):
         url = choice(self.danbooru_pool) + self.popular_path
-        print(f'get moe girl from: {url}')
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as resp:
                 resp_text = await resp.text()

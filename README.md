@@ -1,3 +1,3 @@
 # SproutBOT
 
-## docker and docker-compose required
+docker and docker-compose required

@@ -1,5 +1,6 @@
+import importlib
 import logging
-from typing import Optional, Any
+from typing import Any, Optional
 
 from aiocqhttp import CQHttp
 
@@ -36,6 +37,14 @@ class Sprout(CQHttp):
         async def _(ctx):
             await handle_meta_event(self, ctx)
 
+    def start_all_tasks(self):
+        _run_vtb_notification(self)
+
+    def stop_all_tasks(self):
+        jobs = scheduler.get_jobs()
+        for job in jobs:
+            job.remove()
+
 
 _bot: Optional[Sprout] = None
 
@@ -47,6 +56,7 @@ def get_bot() -> Sprout:
 
 
 def run(host: Optional[str] = None, port: Optional[int] = None, *args, **kwargs):
+    get_bot().start_all_tasks()
     get_bot().run(host=host, port=port, *args, **kwargs)
 
 
@@ -61,6 +71,19 @@ def _start_scheduler():
     if scheduler and not scheduler.running:
         scheduler.configure(_bot.config.APSCHEDULER_CONFIG)
         scheduler.start()
+
+
+def _run_vtb_notification(self):
+    live_status_dict = dict()
+    schedule_module = importlib.import_module('sprout.schedules.vtb_subscribe')
+    scheduler.add_job(
+        schedule_module.initialize,
+        id='vtb_subscribe',
+        kwargs={'bot': self, 'live_status_dict': live_status_dict},
+        trigger='interval',
+        replace_existing=True,
+        minutes=1,
+    )
 
 
 __all__ = [
