@@ -56,7 +56,6 @@ def get_bot() -> Sprout:
 
 
 def run(host: Optional[str] = None, port: Optional[int] = None, *args, **kwargs):
-    get_bot().start_all_tasks()
     get_bot().run(host=host, port=port, *args, **kwargs)
 
 
@@ -65,7 +64,7 @@ def init(config_object: Optional[Any] = None) -> None:
     _bot = Sprout(config_object)
 
     _bot.server_app.before_serving(_start_scheduler)
-
+    _bot.server_app.after_serving(_bot.start_all_tasks)
 
 def _start_scheduler():
     if scheduler and not scheduler.running:
