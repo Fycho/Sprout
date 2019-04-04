@@ -8,4 +8,4 @@ async def run(bot, ctx, cmd, arg) -> None:
         c.execute(arg)
         r = c.fetchall()
 
-    await bot.send(ctx, json.dumps(r))
+    await bot.send(ctx, json.dumps(r, ensure_ascii=False, encoding='utf-8'))
