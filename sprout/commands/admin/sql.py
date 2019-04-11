@@ -9,7 +9,7 @@ async def run(bot, ctx, cmd, arg) -> None:
             c.execute(arg)
             r = c.fetchall()
             message = json.dumps(r, ensure_ascii=False)
-    except Exception as err:
+    except sqlite3.Error as err:
         message = json.dumps(err, ensure_ascii=False)
 
     await bot.send(ctx, message)
