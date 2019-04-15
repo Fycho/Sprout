@@ -6,6 +6,8 @@ import aiohttp
 
 from sprout.helpers import is_number
 
+room_url = 'https://live.bilibili.com/'
+api_url = 'https://api.live.bilibili.com/room/v1/Room/get_info?id='
 
 def get_vtb_list(bot):
     with sqlite3.connect(bot.config.db) as connect:
@@ -113,7 +115,7 @@ async def handle_query_status(bot, ctx):
     vtb_list = get_vtb_list(bot)
     for vtb in vtb_list:
         async with aiohttp.ClientSession() as session:
-            async with session.get(bot.config.api_url + vtb['room_b']) as resp:
+            async with session.get(api_url + vtb['room_b']) as resp:
                 resp_text = await resp.text()
                 result = json.loads(resp_text)
                 if result['data']['live_status'] == 1:
@@ -128,11 +130,8 @@ async def handle_query_status(bot, ctx):
     else:
         message = '正在bilibili直播的Virtural Youtuber：'
         for v in streaming_list:
-            message += '\n - ' + v[1] + ' <' + bot.config.room_url + v[0] + '>'
+            message += '\n - ' + v[1] + ' <' + room_url + v[0] + '>'
 
-    # message += '\n正在bilibili轮播的Virtural Youtuber：'
-    # for v in roundplaying_list:
-    #     message += '\n - ' + v[1] + ' <' + bot.config.room_url + v[0] + '>'
     await bot.send(ctx, message=message)
 
 

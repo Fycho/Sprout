@@ -7,6 +7,8 @@ import aiohttp
 import config
 from sprout.log import logger
 
+room_url = 'https://live.bilibili.com/'
+api_url = 'https://api.live.bilibili.com/room/v1/Room/get_info?id='
 
 # 获取需要查询的房间
 def get_subscribed_rooms() -> list:
@@ -41,7 +43,7 @@ async def initialize(bot, live_status_dict) -> None:
 
 async def handler(bot, current_vtb, live_status_dict) -> None:
     async with aiohttp.ClientSession() as session:
-        url = config.api_url + current_vtb['room_b']
+        url = api_url + current_vtb['room_b']
         async with session.get(url) as resp:
             resp_text = await resp.text()
             result = json.loads(resp_text)
@@ -68,5 +70,5 @@ async def push_message(vid, title, bot) -> None:
     user_ids = get_users_by_room(vid)
     for user_id in user_ids:
         logger.info('Notified user' + ': ' + str(user_id))
-        message = '你订阅的' + item['name_zh'] + '开始直播：' + bot.config.room_url + item['room_b'] + '。标题：' + title
+        message = '你订阅的' + item['name_zh'] + '开始直播：' + room_url + item['room_b'] + '。标题：' + title
         await bot.send_private_msg(user_id=user_id, message=message)

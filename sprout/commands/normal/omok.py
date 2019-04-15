@@ -14,6 +14,7 @@ async def run(bot: Sprout, ctx, cmd, arg) -> None:
     elif arg == 'quit':
         await handle_quit(bot, ctx)
 
+
 async def handle_join(bot, ctx):
     game = bot.omok_instance
     if len(game.players) >= game.max_player:
@@ -61,6 +62,7 @@ async def countdown(bot, ctx):
     await asyncio.sleep(30)
     await bot.send(ctx, message='用户' + str(game.players[game.current_turn]) + '在30秒内没有操作，游戏结束。')
     game.init()
+
 
 async def waitfor(bot, ctx):
     game = bot.omok_instance

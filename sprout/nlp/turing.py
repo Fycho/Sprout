@@ -5,8 +5,8 @@ import random
 
 import aiohttp
 
-API_KEY = os.environ.get('TURING_KEY')
-API_URL = 'http://openapi.tuling123.com/openapi/api/v2'
+turing_api_key = os.environ.get('TURING_KEY')
+turing_api_url = 'http://openapi.tuling123.com/openapi/api/v2'
 
 
 async def fetch_turing_results(user_id: int, input: str) -> dict:
@@ -20,14 +20,14 @@ async def fetch_turing_results(user_id: int, input: str) -> dict:
             }
         },
         "userInfo": {
-            "apiKey": API_KEY,
+            "apiKey": turing_api_key,
             "userId": user_id
         },
     }
     json_params = json.dumps(request_params)
     async with aiohttp.ClientSession() as session:
         headers = {'content-type': 'application/json', 'charset': 'utf8'}
-        async with session.post(url=API_URL, data=json_params, headers=headers) as resp:
+        async with session.post(url=turing_api_url, data=json_params, headers=headers) as resp:
             resp_text = await resp.text(encoding='utf8')
             return json.loads(resp_text)
 

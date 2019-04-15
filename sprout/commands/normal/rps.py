@@ -1,4 +1,4 @@
-import random
+import numpy as np
 
 
 async def run(bot, ctx, cmd, arg) -> None:
@@ -7,7 +7,7 @@ async def run(bot, ctx, cmd, arg) -> None:
         return await bot.send(ctx, message='请出剪刀、石头或布中的一个', at_sender=True)
 
     user_index = options.index(arg)
-    bot_index = random.randint(0, 2)
+    bot_index = np.random.randint(0, 3)
 
     message = f'你是{options[user_index]}，我是{options[bot_index]}，'
 
