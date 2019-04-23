@@ -2,7 +2,6 @@ import asyncio
 import json
 import os
 import random
-
 import aiohttp
 
 turing_api_key = os.environ.get('TURING_KEY')

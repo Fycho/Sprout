@@ -4,7 +4,7 @@ from typing import Any, Optional
 
 from aiocqhttp import CQHttp
 
-from app.game.omok_game import OmokGame
+from app.games.omok_game import OmokGame
 from app.sched import Scheduler
 from .event_handler import *
 from .log import logger

@@ -2,8 +2,8 @@ import importlib
 import re
 from typing import Tuple
 
-from app.nlp.omok_place import handle_omok
-from app.nlp.turing import handle_turing_api
+from app.nlps.omok_place import handle_omok
+from app.nlps.turing import handle_turing_api
 from .log import logger
 
 
