@@ -4,8 +4,8 @@ from typing import Any, Optional
 
 from aiocqhttp import CQHttp
 
-from sprout.game.omok_game import OmokGame
-from sprout.sched import Scheduler
+from app.game.omok_game import OmokGame
+from app.sched import Scheduler
 from .event_handler import *
 from .log import logger
 

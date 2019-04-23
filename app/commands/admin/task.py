@@ -1,4 +1,4 @@
-from sprout import Sprout
+from app import Sprout
 
 
 async def run(bot: Sprout, ctx, cmd, arg) -> None:

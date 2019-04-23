@@ -12,5 +12,4 @@ APSCHEDULER_CONFIG: Dict[str, Any] = {
     'apscheduler.timezone': 'Asia/Shanghai'
 }
 
-db = '/data/sprout/sprout/db/sprout.db'
 

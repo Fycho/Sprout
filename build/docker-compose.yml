@@ -1,6 +1,18 @@
 version: '2'
 
 services:
+  db:
+    container_name: mysql1
+    image: mysql:5.7.12
+    restart: always
+    user: root
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../runtime/mysql:/var/lib/mysql
   cqhttp:
     container_name: cqhttp
     image: richardchien/cqhttp:latest
@@ -13,7 +25,7 @@ services:
       - "5700:5700"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ../coolq:/home/user/coolq
+      - ../runtime/coolq:/home/user/coolq
   sprout:
     container_name: sprout
     build:
@@ -27,6 +39,6 @@ services:
       - "8888:8888"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ../../sprout:/data/sprout
+      - ../app:/data/app
     depends_on:
       - cqhttp

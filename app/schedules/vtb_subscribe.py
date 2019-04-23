@@ -4,8 +4,8 @@ import sqlite3
 
 import aiohttp
 
-import config
-from sprout.log import logger
+from app import config
+from app.log import logger
 
 room_url = 'https://live.bilibili.com/'
 api_url = 'https://api.live.bilibili.com/room/v1/Room/get_info?id='

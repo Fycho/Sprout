@@ -2,8 +2,8 @@ import importlib
 import re
 from typing import Tuple
 
-from sprout.nlp.omok_place import handle_omok
-from sprout.nlp.turing import handle_turing_api
+from app.nlp.omok_place import handle_omok
+from app.nlp.turing import handle_turing_api
 from .log import logger
 
 

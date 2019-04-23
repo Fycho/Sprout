@@ -1,4 +1,6 @@
+#!/bin/bash
 git pull
-cd docker
+cd build
 docker-compose build sprout
 docker-compose up -d
+docker restart sprout
