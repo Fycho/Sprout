@@ -4,10 +4,10 @@ from typing import Any, Optional
 
 from aiocqhttp import CQHttp
 
-from app.games.omok_game import OmokGame
-from app.sched import Scheduler
 from .event_handler import *
+from .games.omok_game import OmokGame
 from .log import logger
+from .sched import Scheduler
 
 scheduler = Scheduler()
 

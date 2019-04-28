@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from app import *
-
-from app import config
+from sprout import config, get_bot, init, run
 
 sprout = init(config)
 app = get_bot().server_app

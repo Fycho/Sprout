@@ -35,7 +35,7 @@ def sum_up(board):
                 board[i][j] += board[i + 1][j]
                 board[i + 1][j] = 0
 
-
+class Board:
     def __init__(self, size):
         self.__board = np.zeros((size, size))
         self.__score = 0

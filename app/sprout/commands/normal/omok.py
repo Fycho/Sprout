@@ -1,5 +1,6 @@
 import asyncio
-from app import Sprout
+
+from sprout import Sprout
 
 
 async def run(bot: Sprout, ctx, cmd, arg) -> None:

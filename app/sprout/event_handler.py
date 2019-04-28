@@ -2,9 +2,9 @@ import importlib
 import re
 from typing import Tuple
 
-from app.nlps.omok_place import handle_omok
-from app.nlps.turing import handle_turing_api
+from sprout.nlps.omok_place import handle_omok
 from .log import logger
+from .nlps.turing import handle_turing_api
 
 
 async def handle_message(bot, ctx) -> None:

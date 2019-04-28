@@ -4,8 +4,8 @@ import sqlite3
 
 import aiohttp
 
-from app import config
-from app.log import logger
+from app.sprout.log import logger
+from sprout import config
 
 room_url = 'https://live.bilibili.com/'
 api_url = 'https://api.live.bilibili.com/room/v1/Room/get_info?id='
@@ -38,7 +38,7 @@ async def initialize(bot, live_status_dict) -> None:
     for current_vtb in vtb_models:
         tasks.append(asyncio.create_task(handler(bot, current_vtb, live_status_dict)))
 
-    asyncio.gather(*tasks)
+    await asyncio.gather(*tasks)
 
 
 async def handler(bot, current_vtb, live_status_dict) -> None:
@@ -51,10 +51,9 @@ async def handler(bot, current_vtb, live_status_dict) -> None:
             title = result['data']['title']
             if current_vtb['room_b'] in live_status_dict and live_status == 1 and live_status_dict[
                 current_vtb['room_b']] != 1:
+                live_status_dict[current_vtb['room_b']] = result['data']['live_status']
                 logger.debug(current_vtb['name_zh'] + '<' + current_vtb['room_b'] + '> started streaming.')
                 await push_message(current_vtb['vid'], title, bot)
-
-            live_status_dict[current_vtb['room_b']] = result['data']['live_status']
 
 
 # 向该房间的订阅者发送消息
@@ -68,7 +67,11 @@ async def push_message(vid, title, bot) -> None:
         item = dict(zip([d[0] for d in c.description], row))
 
     user_ids = get_users_by_room(vid)
+    tasks = list()
+
     for user_id in user_ids:
         logger.info('Notified user' + ': ' + str(user_id))
         message = '你订阅的' + item['name_zh'] + '开始直播：' + room_url + item['room_b'] + '。标题：' + title
-        await bot.send_private_msg(user_id=user_id, message=message)
+        tasks.append(asyncio.create_task(bot.send_private_msg(user_id=user_id, message=message)))
+
+    await asyncio.gather(*tasks)

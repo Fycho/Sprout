@@ -4,6 +4,8 @@ RUN apk add g++
 
 RUN pip install msgpack requests aiocqhttp apscheduler numpy
 
+RUN pip install SQLAlchemy
+
 EXPOSE 8888
 
-CMD ["python", "/data/app/run.py"]
+CMD ["python", "/data/app/main.py"]
