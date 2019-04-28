@@ -3,7 +3,7 @@ import re
 
 import aiohttp
 
-from app.sprout.helpers import is_number
+from sprout.helpers import is_number
 
 
 async def run(bot, ctx, cmd, arg) -> None:

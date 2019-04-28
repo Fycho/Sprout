@@ -1,15 +1,16 @@
 import json
-import sqlite3
+
+from database import engine
+from sprout.log import logger
 
 
 async def run(bot, ctx, cmd, arg) -> None:
     try:
-        with sqlite3.connect(bot.config.db) as connect:
-            c = connect.cursor()
-            c.execute(arg)
-            r = c.fetchall()
-            message = json.dumps(r, ensure_ascii=False)
-    except Exception as err:
-        message = json.dumps(err, ensure_ascii=False)
+        with engine.connect() as conn:
+            logger.info(f'executing raw sql: "{arg}" by {ctx["user_id"]}')
+            res = conn.execute(arg).fetchall()
+            message = json.dumps([dict(r) for r in res], ensure_ascii=False)
+            await bot.send(ctx, message=message)
 
-    await bot.send(ctx, message)
+    except Exception as error:
+        logger.error(error)

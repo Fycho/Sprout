@@ -6,6 +6,8 @@ RUN pip install msgpack requests aiocqhttp apscheduler numpy
 
 RUN pip install SQLAlchemy
 
+RUN pip install pymysql
+
 EXPOSE 8888
 
 CMD ["python", "/data/app/main.py"]

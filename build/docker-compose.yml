@@ -1,17 +1,17 @@
 version: '2'
 
 services:
-#  db:
-#    container_name: mysql1
-#    image: mysql:5.7.12
-#    restart: always
-#    user: root
-#    environment:
-#      MYSQL_ROOT_PASSWORD: root
-#    ports:
-#      - "3306:3306"
-#    volumes:
-#      - ../runtime/mysql:/var/lib/mysql
+  db:
+    container_name: mysql2
+    image: mysql:5.7.12
+    restart: always
+    user: root
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - ../runtime/mysql:/var/lib/mysql
   cqhttp:
     container_name: cqhttp
     image: richardchien/cqhttp:latest

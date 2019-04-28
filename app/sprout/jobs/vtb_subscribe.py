@@ -1,77 +1,50 @@
 import asyncio
 import json
-import sqlite3
 
 import aiohttp
 
-from app.sprout.log import logger
-from sprout import config
+from database import session
+from sprout.log import logger
+from sprout.models import Vtb
 
 room_url = 'https://live.bilibili.com/'
 api_url = 'https://api.live.bilibili.com/room/v1/Room/get_info?id='
 
-# 获取需要查询的房间
-def get_subscribed_rooms() -> list:
-    with sqlite3.connect(config.db) as connect:
-        c = connect.cursor()
-        c.execute(
-            'SELECT user_subscribe.vid,vtb.room_b,vtb.name_zh FROM user_subscribe LEFT JOIN vtb ON vtb.vid = user_subscribe.vid GROUP BY room_b')
-        items = c.fetchall()
-
-    return list(map(lambda i: {'vid': i[0], 'room_b': i[1], 'name_zh': i[2]}, items))
-
-
-# 获取该房间的订阅者
-def get_users_by_room(vid) -> list:
-    with sqlite3.connect(config.db) as connect:
-        c = connect.cursor()
-        c.execute(
-            'SELECT user_id FROM user_subscribe where vid=' + str(vid))
-        items = c.fetchall()
-
-    return list(map(lambda i: i[0], items))
-
-
 async def initialize(bot, live_status_dict) -> None:
-    vtb_models = get_subscribed_rooms()
+    vtb_models = session.query(Vtb).all()
     tasks = list()
-    for current_vtb in vtb_models:
-        tasks.append(asyncio.create_task(handler(bot, current_vtb, live_status_dict)))
+    for vtb in vtb_models:
+        tasks.append(asyncio.create_task(handler(bot, vtb, live_status_dict)))
 
     await asyncio.gather(*tasks)
 
 
 async def handler(bot, current_vtb, live_status_dict) -> None:
     async with aiohttp.ClientSession() as session:
-        url = api_url + current_vtb['room_b']
+        url = api_url + current_vtb.room_b
         async with session.get(url) as resp:
             resp_text = await resp.text()
             result = json.loads(resp_text)
             live_status = result['data']['live_status']
             title = result['data']['title']
-            if current_vtb['room_b'] in live_status_dict and live_status == 1 and live_status_dict[
-                current_vtb['room_b']] != 1:
-                live_status_dict[current_vtb['room_b']] = result['data']['live_status']
-                logger.debug(current_vtb['name_zh'] + '<' + current_vtb['room_b'] + '> started streaming.')
-                await push_message(current_vtb['vid'], title, bot)
+            if current_vtb.room_b in live_status_dict and live_status == 1 and live_status_dict[
+                current_vtb.room_b] != 1:
+                live_status_dict[current_vtb.room_b] = result['data']['live_status']
+                logger.debug(current_vtb.name_zh + '<' + current_vtb.room_b + '> started streaming.')
+                await push_message(current_vtb.vid, title, bot)
 
 
 # 向该房间的订阅者发送消息
 async def push_message(vid, title, bot) -> None:
-    with sqlite3.connect(bot.config.db) as connect:
-        connect.row_factory = sqlite3.Row
-        c = connect.cursor()
-        c.execute(
-            'SELECT * FROM vtb where vid=' + str(vid))
-        row = c.fetchone()
-        item = dict(zip([d[0] for d in c.description], row))
-
-    user_ids = get_users_by_room(vid)
+    # 获取该vid的订阅者
+    vtb = session.query(Vtb).get(vid)
+    user_subs = session.query(Vtb).get(vid).user_subscribes.all()
+    user_ids = list(map(lambda x: x.user_id, user_subs))
     tasks = list()
 
     for user_id in user_ids:
         logger.info('Notified user' + ': ' + str(user_id))
-        message = '你订阅的' + item['name_zh'] + '开始直播：' + room_url + item['room_b'] + '。标题：' + title
+        message = f'你订阅的{vtb.name_zh}开始直播：{room_url}{vtb.room_b}。标题：{title}'
         tasks.append(asyncio.create_task(bot.send_private_msg(user_id=user_id, message=message)))
 
     await asyncio.gather(*tasks)

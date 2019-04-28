@@ -78,7 +78,7 @@ def _start_scheduler():
 
 def _run_vtb_notification(self):
     live_status_dict = dict()
-    schedule_module = importlib.import_module('sprout.schedules.vtb_subscribe')
+    schedule_module = importlib.import_module('sprout.jobs.vtb_subscribe')
     scheduler.add_job(
         schedule_module.initialize,
         id='vtb_subscribe',
