@@ -2,21 +2,25 @@ import importlib
 import re
 from typing import Tuple
 
+from api.rabbitmq import handle_message_api
 from sprout.nlps.omok_place import handle_omok
 from .log import logger
 from .nlps.turing import handle_turing_api
 
 
 async def handle_message(bot, ctx) -> None:
-    handled = await handle_command(bot, ctx)
-    if handled:
-        logger.info(f'Message {ctx["message_id"]} is handled as a command')
-        return
+    try:
+        handle_message_api(bot, ctx)
+    finally:
+        handled = await handle_command(bot, ctx)
+        if handled:
+            logger.info(f'Message {ctx["message_id"]} is handled as a command')
+            return
 
-    handled = await handle_natural_language(bot, ctx)
-    if handled:
-        logger.info(f'Message {ctx["message_id"]} is handled as natural language')
-        return
+        handled = await handle_natural_language(bot, ctx)
+        if handled:
+            logger.info(f'Message {ctx["message_id"]} is handled as natural language')
+            return
 
 
 async def handle_notice(bot, ctx) -> None:

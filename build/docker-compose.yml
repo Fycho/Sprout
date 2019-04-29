@@ -34,6 +34,9 @@ services:
     environment:
       SUPER_ACCOUNT: 172950203 # change to own super account
       TURING_KEY: 4588c3b24f214343985fbdae2a3aef46
+      RMQ_HOST: 0.0.0.0
+      RMQ_USER: guest
+      RMQ_PWD: guest
     ports:
       - "8888:8888"
     volumes:

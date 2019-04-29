@@ -8,6 +8,8 @@ RUN pip install SQLAlchemy
 
 RUN pip install pymysql
 
+RUN pip install pika
+
 EXPOSE 8888
 
 CMD ["python", "/data/app/main.py"]
