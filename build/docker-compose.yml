@@ -1,17 +1,6 @@
 version: '2'
 
 services:
-  db:
-    container_name: mysql2
-    image: mysql:5.7.12
-    restart: always
-    user: root
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-    ports:
-      - "3307:3306"
-    volumes:
-      - ../runtime/mysql:/var/lib/mysql
   cqhttp:
     container_name: cqhttp
     image: richardchien/cqhttp:latest
@@ -36,8 +25,8 @@ services:
       TURING_KEY: 4588c3b24f214343985fbdae2a3aef46
       MYSQL_HOST: 0.0.0.0
       RMQ_HOST: 0.0.0.0
-      RMQ_USER: guest
-      RMQ_PWD: guest
+      RMQ_USER: fycho
+      RMQ_PWD: 10110314
     ports:
       - "8888:8888"
     volumes:
