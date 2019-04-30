@@ -15,8 +15,8 @@ def handle_message_api(bot, ctx):
         return
 
     now = datetime.datetime.now()
-    timestr = now.strftime('%Y-%m-%d %H:%M:%S')
-    content = json.dumps({'ctx': ctx, 'time': timestr}, ensure_ascii=False)
+
+    content = json.dumps({'uid': ctx['user_id'], 'gid': ctx['group_id'], 'msg': ctx['message'], 'created': now.strftime('%Y-%m-%d %H:%M:%S')}, ensure_ascii=False)
 
     message_body = base64.b64encode(bytes(content, encoding='utf8'))
     credentials = pika.PlainCredentials(USER, PWD)
