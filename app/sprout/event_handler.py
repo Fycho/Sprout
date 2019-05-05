@@ -9,18 +9,17 @@ from .nlps.turing import handle_turing_api
 
 
 async def handle_message(bot, ctx) -> None:
-    try:
-        handle_message_api(bot, ctx)
-    finally:
-        handled = await handle_command(bot, ctx)
-        if handled:
-            logger.info(f'Message {ctx["message_id"]} is handled as a command')
-            return
+    handled = await handle_command(bot, ctx)
+    if handled:
+        logger.info(f'Message {ctx["message_id"]} is handled as a command')
+        return
 
-        handled = await handle_natural_language(bot, ctx)
-        if handled:
-            logger.info(f'Message {ctx["message_id"]} is handled as natural language')
-            return
+    handled = await handle_natural_language(bot, ctx)
+    if handled:
+        logger.info(f'Message {ctx["message_id"]} is handled as natural language')
+        return
+    else:
+        handle_message_api(bot, ctx)
 
 
 async def handle_notice(bot, ctx) -> None:
