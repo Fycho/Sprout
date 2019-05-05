@@ -107,9 +107,9 @@ async def handle_query_status(bot, ctx):
                     streaming_list.append(vtb)
 
     if len(streaming_list) < 1:
-        message = '现在没有Virtural Youtuber在bilibili直播'
+        message = '现在没有Virtual Youtuber在bilibili直播'
     else:
-        message = '正在bilibili直播的Virtural Youtuber：'
+        message = '正在bilibili直播的Virtual Youtuber：'
         for vtb in streaming_list:
             message += f'\n - {vtb.name_zh} <{room_url}{vtb.room_b}>'
 
