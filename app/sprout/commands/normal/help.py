@@ -19,7 +19,5 @@ async def run(bot, ctx, cmd, arg) -> None:
 - /tzfe
     * 2048游戏(开发中)
 - /rps [剪刀|石头|布]
-    * 和豆芽菜玩猜拳。
-- /word
-    * 一星期高频词'''
+    * 和豆芽菜玩猜拳。'''
     await bot.send(ctx, message=message)
