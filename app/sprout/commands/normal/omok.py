@@ -18,7 +18,7 @@ async def run(bot: Sprout, ctx, cmd, arg) -> None:
 async def handle_join(bot, ctx):
     game = bot.omok_instance
     if len(game.players) >= game.max_player:
-        await bot.send(ctx, message=f'当前玩家已满，请等待他们游戏结束。')
+        return await bot.send(ctx, message=f'当前玩家已满，请等待他们游戏结束。')
 
     if len(game.players) == 0:
         game.init()
