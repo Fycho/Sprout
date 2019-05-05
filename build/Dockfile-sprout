@@ -10,6 +10,8 @@ RUN pip install pymysql
 
 RUN pip install pika
 
+RUN pip install jieba
+
 EXPOSE 8888
 
 CMD ["python", "/data/app/main.py"]

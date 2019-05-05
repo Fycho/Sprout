@@ -24,6 +24,8 @@ services:
       SUPER_ACCOUNT: 172950203 # change to own super account
       TURING_KEY: 4588c3b24f214343985fbdae2a3aef46
       MYSQL_HOST: 0.0.0.0
+      MYSQL_USER: root
+      MYSQL_PWD: root
       RMQ_HOST: 0.0.0.0
       RMQ_USER: fycho
       RMQ_PWD: 10110314
