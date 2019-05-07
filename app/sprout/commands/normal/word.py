@@ -11,6 +11,7 @@ PWD = os.environ.get('MYSQL_PWD')
 DB = 'sprout'
 
 stopwords_path = '/data/app/analyzers/stopwords.txt'
+user_dict_path = '/data/app/analyzers/user_dict.txt'
 
 
 async def run(bot, ctx, cmd, arg) -> None:
@@ -38,6 +39,7 @@ def handle_seg(results) -> list:
 
     str_result = ''.join(articles)
     str_result = re.sub('[0-9!"#$%&\'()*+,-./:;<=>?@，。★、…【】《》？“”‘’！[\\]^_`{|}~\n\r]+', '', str_result)
+    jieba.load_userdict(user_dict_path)
     jieba.analyse.set_stop_words(stopwords_path)
     seg_list = jieba.analyse.extract_tags(str_result, topK=10)
     return seg_list
