@@ -28,7 +28,7 @@ def handle_group(gid):
         now = datetime.datetime.now()
         oneweek = datetime.timedelta(days=7)
         time = (now - oneweek).strftime('%Y-%m-%d %H:%M:%S')
-        c.execute(f'SELECT msg FROM msg WHERE msg NOT LIKE "%[CQ%" AND gid={gid} AND created>{time}')
+        c.execute(f'SELECT msg FROM msg WHERE msg NOT LIKE "%[CQ%" AND gid={gid} AND created>"{time}"')
         results = handle_seg(c.fetchall())
         return '\n'.join(results)
 
