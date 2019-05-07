@@ -15,7 +15,7 @@ work_path = os.getcwd()
 stopwords_path = path.join(work_path, './analyzers/stopwords.txt')
 
 
-async def run(bot, ctx) -> None:
+async def run(bot, ctx, cmd, arg) -> None:
     if 'group_id' not in ctx:
         return await bot.send(ctx, '非群')
 
