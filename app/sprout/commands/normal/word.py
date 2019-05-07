@@ -1,7 +1,6 @@
 import datetime
 import os
 import re
-from os import path
 
 import jieba.analyse
 import pymysql
@@ -11,8 +10,7 @@ USER = os.environ.get('MYSQL_USER')
 PWD = os.environ.get('MYSQL_PWD')
 DB = 'sprout'
 
-work_path = '/data/app'
-stopwords_path = path.join(work_path, './analyzers/stopwords.txt')
+stopwords_path = '/data/app/analyzers/stopwords.txt'
 
 
 async def run(bot, ctx, cmd, arg) -> None:
@@ -40,6 +38,6 @@ def handle_seg(results) -> list:
 
     str_result = ''.join(articles)
     str_result = re.sub('[0-9!"#$%&\'()*+,-./:;<=>?@，。★、…【】《》？“”‘’！[\\]^_`{|}~\n\r]+', '', str_result)
-    jieba.analyse.set_stop_words('./stopwords.txt')
+    jieba.analyse.set_stop_words(stopwords_path)
     seg_list = jieba.analyse.extract_tags(str_result, topK=10)
     return seg_list
