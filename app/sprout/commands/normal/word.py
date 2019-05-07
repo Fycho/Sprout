@@ -11,7 +11,7 @@ USER = os.environ.get('MYSQL_USER')
 PWD = os.environ.get('MYSQL_PWD')
 DB = 'sprout'
 
-work_path = os.getcwd()
+work_path = '/data/app'
 stopwords_path = path.join(work_path, './analyzers/stopwords.txt')
 
 
