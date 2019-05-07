@@ -88,4 +88,12 @@ fnmdp
 sb
 点图
 小黑屋
+摸鱼
 骑空士
+萨塔妮亚
+刷图
+打图
+sv
+ds
+timing
+metadata
