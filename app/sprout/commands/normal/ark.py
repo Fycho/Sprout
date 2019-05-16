@@ -3,7 +3,7 @@ import re
 
 
 def get_employee_data():
-    with open('../../modules/employee.json', 'r') as f:
+    with open('../../modules/ark/employee.json', 'r') as f:
         results = json.loads(f.read())
 
     return results
@@ -11,11 +11,11 @@ def get_employee_data():
 
 async def handle_index(bot, ctx):
     message = '''/ark 明日方舟指令帮助：
-    /ark info [名字] - 查看干员信息
-    /ark calc [标签1|标签2..] - 公开招募计算器「未开放」
-    /ark draw - 模拟私有寻访（无up、保底计算）「未开放」
-    /ark crazy - 模拟十连（无up、保底计算）「未开放」
-    /ark recruit [标签1|标签2..] - 模拟公开招募「未开放」
+/ark info [名字] - 查看干员信息
+/ark calc [标签1|标签2..] - 公开招募计算器「未开放」
+/ark draw - 模拟私有寻访（无up、保底计算）「未开放」
+/ark crazy - 模拟十连（无up、保底计算）「未开放」
+/ark recruit [标签1|标签2..] - 模拟公开招募「未开放」
 '''
     return await bot.send(ctx, message=message, at_sender=True)
 
