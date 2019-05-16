@@ -24,8 +24,8 @@ async def handle_info(bot, ctx, sub_arg):
     result = list(filter(lambda x: x['name'] == sub_arg[0], employees))
     if len(result) > 0:
         item = result[0]
-        message = f'姓名：{item["name"]}({item["name-en"]})\n阵营：{item["camp"]}\n类型：{item["type"]}\n稀有度{item["level"]}'
-        tags = '|'.join(item["tags"])
+        message = f'姓名：{item["name"]}({item["name-en"]})\n阵营：{item["camp"]}\n类型：{item["type"]}\n稀有度：{item["level"]}星'
+        tags = '、'.join(item["tags"])
         message += f'\n标签：{tags}'
         message += f'\n描述：{item["characteristic"]}'
         return await bot.send(ctx, message=message, at_sender=True)
