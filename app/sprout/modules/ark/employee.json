@@ -542,6 +542,7 @@
       "削弱"
     ],
     "public": true,
+    "private": true,
     "name-en": "Meteor"
   },
   {
