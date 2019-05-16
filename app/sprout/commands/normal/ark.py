@@ -22,7 +22,9 @@ async def handle_index(bot, ctx):
 
 async def handle_info(bot, ctx, sub_arg):
     employees = get_employee_data()
+    print(employees)
     result = list(filter(lambda x: x['name'] == sub_arg, employees))
+    print(result)
     if len(result) > 1:
         item = result[0]
         message = f'姓名：{item["name"]}({item["name-en"]})\n阵营：{item["camp"]}\n类型：{item["type"]}\n稀有度{item["level"]}'
