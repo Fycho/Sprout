@@ -7,9 +7,12 @@
     "sex": "女",
     "characteristic": "",
     "tags": [
-      "三测暂不实装"
+      "近战位",
+      "群攻",
+      "爆发"
     ],
-    "public": true,
+    "public": false,
+    "private": false,
     "name-en": "Savage"
   },
   {
@@ -23,7 +26,8 @@
       "远程位",
       "治疗"
     ],
-    "public": false,
+    "public": true,
+    "private": false,
     "name-en": "Lancet-2"
   },
   {
@@ -37,7 +41,8 @@
       "近战位",
       "支援"
     ],
-    "public": false,
+    "public": true,
+    "private": false,
     "name-en": "Castle-3"
   },
   {
@@ -51,7 +56,8 @@
       "近战位",
       "新手"
     ],
-    "public": false,
+    "public": true,
+    "private": false,
     "name-en": "Yato"
   },
   {
@@ -65,7 +71,8 @@
       "远程位",
       "新手"
     ],
-    "public": false,
+    "public": true,
+    "private": false,
     "name-en": "Durin"
   },
   {
@@ -79,7 +86,8 @@
       "远程位",
       "新手"
     ],
-    "public": false,
+    "public": true,
+    "private": false,
     "name-en": "12F"
   },
   {
@@ -93,7 +101,8 @@
       "远程位",
       "新手"
     ],
-    "public": false,
+    "public": true,
+    "private": false,
     "name-en": "Rangers"
   },
   {
@@ -107,7 +116,8 @@
       "近战位",
       "新手"
     ],
-    "public": false,
+    "public": true,
+    "private": false,
     "name-en": "Noir Corne"
   },
   {
@@ -121,7 +131,8 @@
       "近战位",
       "费用回复"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Fang"
   },
   {
@@ -135,7 +146,8 @@
       "近战位",
       "费用回复"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Vanilla"
   },
   {
@@ -150,7 +162,8 @@
       "输出",
       "费用回复"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Plume"
   },
   {
@@ -164,7 +177,8 @@
       "远程位",
       "治疗"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Hibiscus"
   },
   {
@@ -178,7 +192,8 @@
       "远程位",
       "治疗"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Ansel"
   },
   {
@@ -192,7 +207,8 @@
       "远程位",
       "群攻"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Lava"
   },
   {
@@ -206,7 +222,8 @@
       "远程位",
       "输出"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Steward"
   },
   {
@@ -220,7 +237,8 @@
       "远程位",
       "输出"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Kroos"
   },
   {
@@ -234,7 +252,8 @@
       "远程位",
       "输出"
     ],
-    "public": false,
+    "public": true,
+    "private": false,
     "name-en": "Adnachiel"
   },
   {
@@ -248,7 +267,8 @@
       "远程位",
       "减速"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Orchid"
   },
   {
@@ -263,7 +283,8 @@
       "输出",
       "生存"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Melantha"
   },
   {
@@ -277,7 +298,8 @@
       "近战位",
       "防护"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Beagle"
   },
   {
@@ -291,7 +313,8 @@
       "近战位",
       "防护"
     ],
-    "public": true,
+    "public": false,
+    "private": true,
     "name-en": "Cardigan"
   },
   {
@@ -306,7 +329,8 @@
       "费用回复",
       "防护"
     ],
-    "public": true,
+    "public": false,
+    "private": false,
     "name-en": "Courier"
   },
   {
@@ -321,7 +345,8 @@
       "费用回复",
       "输出"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Scavenger"
   },
   {
@@ -336,7 +361,8 @@
       "输出",
       "费用回复"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Vigna"
   },
   {
@@ -350,7 +376,8 @@
       "远程位",
       "治疗"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Myrrh"
   },
   {
@@ -364,7 +391,8 @@
       "远程位",
       "治疗"
     ],
-    "public": true,
+    "public": false,
+    "private": false,
     "name-en": "Gavial"
   },
   {
@@ -378,7 +406,8 @@
       "远程位",
       "治疗"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Perfumer"
   },
   {
@@ -393,7 +422,8 @@
       "远程位",
       "输出"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Haze"
   },
   {
@@ -407,7 +437,8 @@
       "远程位",
       "群攻"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Gitano"
   },
   {
@@ -422,7 +453,8 @@
       "快速复活",
       "防护"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Gravel"
   },
   {
@@ -436,7 +468,8 @@
       "近战位",
       "位移"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Rope"
   },
   {
@@ -449,7 +482,8 @@
     "tags": [
       "三测暂不实装"
     ],
-    "public": true
+    "public": false,
+    "private": false
   },
   {
     "name": "阿消",
@@ -462,7 +496,8 @@
       "近战位",
       "位移"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Shaw"
   },
   {
@@ -475,7 +510,8 @@
     "tags": [
       "三测暂不实装"
     ],
-    "public": true
+    "public": false,
+    "private": false
   },
   {
     "name": "白雪",
@@ -489,7 +525,8 @@
       "群攻",
       "减速"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "ShiraYuki"
   },
   {
@@ -504,7 +541,7 @@
       "输出",
       "削弱"
     ],
-    "public": false,
+    "public": true,
     "name-en": "Meteor"
   },
   {
@@ -519,7 +556,8 @@
       "输出",
       "生存"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Jessica"
   },
   {
@@ -533,7 +571,8 @@
       "远程位",
       "召唤"
     ],
-    "public": true,
+    "public": false,
+    "private": true,
     "name-en": "Deepcolor"
   },
   {
@@ -547,7 +586,8 @@
       "远程位",
       "减速"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Earthspirit"
   },
   {
@@ -562,7 +602,8 @@
       "支援",
       "输出"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Dobermann"
   },
   {
@@ -577,7 +618,8 @@
       "群攻",
       "生存"
     ],
-    "public": false,
+    "public": true,
+    "private": false,
     "name-en": "Estelle"
   },
   {
@@ -590,7 +632,8 @@
     "tags": [
       "三测暂不实装"
     ],
-    "public": true
+    "public": false,
+    "private": false
   },
   {
     "name": "慕斯",
@@ -603,7 +646,8 @@
       "近战位",
       "输出"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Mousse"
   },
   {
@@ -618,7 +662,8 @@
       "减速",
       "输出"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Frostleaf"
   },
   {
@@ -633,7 +678,8 @@
       "近战位",
       "生存"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Matoimaru"
   },
   {
@@ -647,7 +693,8 @@
       "近战位",
       "防护"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Cuora"
   },
   {
@@ -662,7 +709,8 @@
       "防护",
       "治疗"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "ГУМ"
   },
   {
@@ -676,7 +724,8 @@
       "近战位",
       "防护"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Matterhorn"
   },
   {
@@ -692,7 +741,8 @@
       "费用回复",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Texas"
   },
   {
@@ -708,7 +758,8 @@
       "费用回复",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "зима"
   },
   {
@@ -724,7 +775,8 @@
       "支援",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Ptilopsis"
   },
   {
@@ -739,7 +791,8 @@
       "治疗",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Silence"
   },
   {
@@ -755,7 +808,8 @@
       "支援",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Warfarin"
   },
   {
@@ -769,7 +823,8 @@
       "远程位",
       "输出"
     ],
-    "public": true,
+    "public": false,
+    "private": false,
     "name-en": "Amiya"
   },
   {
@@ -782,7 +837,8 @@
     "tags": [
       "三测暂不实装"
     ],
-    "public": true
+    "public": false,
+    "private": false,
   },
   {
     "name": "天火",
@@ -797,7 +853,8 @@
       "群攻",
       "资深干员"
     ],
-    "public": true,
+    "public": false,
+    "private": true,
     "name-en": "Skyfire"
   },
   {
@@ -813,7 +870,8 @@
       "快速复活",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Projekt Red"
   },
   {
@@ -829,7 +887,8 @@
       "输出",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Manticore"
   },
   {
@@ -845,7 +904,8 @@
       "位移",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Cliffheart"
   },
   {
@@ -861,7 +921,8 @@
       "位移",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "FEater"
   },
   {
@@ -876,7 +937,8 @@
       "输出",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Provence"
   },
   {
@@ -891,7 +953,8 @@
       "输出",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Blue Poison"
   },
   {
@@ -907,7 +970,8 @@
       "爆发",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Firewatch"
   },
   {
@@ -923,7 +987,8 @@
       "削弱",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Meteorite"
   },
   {
@@ -938,7 +1003,8 @@
       "输出",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Platinum"
   },
   {
@@ -953,7 +1019,8 @@
       "削弱",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Pramanix"
   },
   {
@@ -969,7 +1036,8 @@
       "输出",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Истина"
   },
   {
@@ -985,7 +1053,8 @@
       "控场",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Mayer"
   },
   {
@@ -1001,7 +1070,8 @@
       "治疗",
       "资深干员"
     ],
-    "public": true,
+    "public": false,
+    "private": true,
     "name-en": "Sora"
   },
   {
@@ -1017,7 +1087,8 @@
       "生存",
       "资深干员"
     ],
-    "public": true,
+    "public": false,
+    "private": true,
     "name-en": "Franka"
   },
   {
@@ -1033,7 +1104,8 @@
       "生存",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Specter"
   },
   {
@@ -1049,7 +1121,8 @@
       "生存",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": false,
     "name-en": "Indra"
   },
   {
@@ -1064,7 +1137,8 @@
       "群攻",
       "支援"
     ],
-    "public": true
+    "public": false,
+    "private": false
   },
   {
     "name": "拉普兰德",
@@ -1079,7 +1153,8 @@
       "削弱",
       "资深干员"
     ],
-    "public": true,
+    "public": false,
+    "private": true,
     "name-en": "Lappland"
   },
   {
@@ -1095,7 +1170,8 @@
       "治疗",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Nearl"
   },
   {
@@ -1111,7 +1187,8 @@
       "输出",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Liskarm"
   },
   {
@@ -1128,7 +1205,8 @@
       "生存",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": false,
     "name-en": "Vulcan"
   },
   {
@@ -1144,7 +1222,8 @@
       "防护",
       "资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Croissant"
   },
   {
@@ -1160,7 +1239,8 @@
       "输出",
       "高级资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Siege"
   },
   {
@@ -1176,7 +1256,8 @@
       "治疗",
       "高级资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Shining"
   },
   {
@@ -1192,7 +1273,8 @@
       "支援",
       "高级资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Nightingale"
   },
   {
@@ -1205,7 +1287,8 @@
     "tags": [
       "三测暂不实装"
     ],
-    "public": true
+    "public": false,
+    "private": false
   },
   {
     "name": "伊芙利特",
@@ -1220,7 +1303,8 @@
       "削弱",
       "高级资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Ifrit"
   },
   {
@@ -1236,7 +1320,8 @@
       "削弱",
       "高级资深干员"
     ],
-    "public": true,
+    "public": false,
+    "private": true,
     "name-en": "Eyjafjalla"
   },
   {
@@ -1251,7 +1336,8 @@
       "输出",
       "高级资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Exusiai"
   },
   {
@@ -1268,7 +1354,8 @@
       "支援",
       "高级资深干员"
     ],
-    "public": true,
+    "public": false,
+    "private": true,
     "name-en": "Angelina"
   },
   {
@@ -1284,7 +1371,8 @@
       "支援",
       "高级资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "SilverAsh"
   },
   {
@@ -1300,7 +1388,8 @@
       "防护",
       "高级资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Hoshiguma"
   },
   {
@@ -1317,7 +1406,8 @@
       "治疗",
       "高级资深干员"
     ],
-    "public": false,
+    "public": true,
+    "private": true,
     "name-en": "Saria"
   }
 ]

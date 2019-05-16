@@ -82,16 +82,16 @@ def draw_once():
 
     employees = get_employee_data()
     if r == 3:
-        choices = list(filter(lambda x: x['level'] == 6, employees))
+        choices = list(filter(lambda x: x['level'] == 6 and x['private'], employees))
         result = random.choice(choices)
     elif r == 2:
-        choices = list(filter(lambda x: x['level'] == 5, employees))
+        choices = list(filter(lambda x: x['level'] == 5 and x['private'], employees))
         result = random.choice(choices)
     elif r == 1:
-        choices = list(filter(lambda x: x['level'] == 4, employees))
+        choices = list(filter(lambda x: x['level'] == 4 and x['private'], employees))
         result = random.choice(choices)
     else:
-        choices = list(filter(lambda x: x['level'] == 3, employees))
+        choices = list(filter(lambda x: x['level'] == 3 and x['private'], employees))
         result = random.choice(choices)
 
     return result
