@@ -3,7 +3,7 @@ import re
 
 
 def get_employee_data():
-    with open('../../modules/ark/employee.json', 'r') as f:
+    with open('/data/app/sprout/modules/ark/employee.json', 'r') as f:
         results = json.loads(f.read())
 
     return results
