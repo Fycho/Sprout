@@ -15,16 +15,14 @@ async def handle_index(bot, ctx):
 /ark calc [标签1|标签2..] - 公开招募计算器「未开放」
 /ark draw - 模拟私有寻访（无up、保底计算）「未开放」
 /ark crazy - 模拟十连（无up、保底计算）「未开放」
-/ark recruit [标签1|标签2..] - 模拟公开招募「未开放」
-'''
+/ark recruit [标签1|标签2..] - 模拟公开招募「未开放」'''
     return await bot.send(ctx, message=message, at_sender=True)
 
 
 async def handle_info(bot, ctx, sub_arg):
     employees = get_employee_data()
-    print(employees)
+    print(sub_arg)
     result = list(filter(lambda x: x['name'] == sub_arg, employees))
-    print(result)
     if len(result) > 1:
         item = result[0]
         message = f'姓名：{item["name"]}({item["name-en"]})\n阵营：{item["camp"]}\n类型：{item["type"]}\n稀有度{item["level"]}'
