@@ -13,7 +13,7 @@ ups = ['夜莺', '推进之王', '芙兰卡', '白金', '德克萨斯']
 async def handle_index(bot, ctx):
     message = '''/ark 明日方舟指令帮助：
 /ark info [名字] - 查看干员信息
-/ark draw - 模拟一次干员寻访）
+/ark draw - 模拟一次干员寻访
 /ark crazy - 模拟十连干员寻访'''
 # / ark calc[标签1 | 标签2..] - 公开招募计算器「未开放」
 # /ark recruit [标签1|标签2..] - 模拟公开招募「未开放」
