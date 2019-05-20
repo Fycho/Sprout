@@ -104,10 +104,10 @@ def draw_once():
 def pick_up(choices):
     rand = random.random()
     up_choices = list(filter(lambda x: x['name'] in ups, choices))
-    print(up_choices)
+    else_choices = list(filter(lambda x: x['name'] not in ups, choices))
     if rand > 0.5 and len(up_choices) > 0:
         res = random.choice(up_choices)
     else:
-        res = random.choice(up_choices)
+        res = random.choice(else_choices)
 
     return res
