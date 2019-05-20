@@ -43,7 +43,10 @@ async def handle_ten_draw(bot, ctx):
     results = []
     for i in range(0, 10):
         results.append(draw_once())
-    message = f'注：仅为模拟，实际以官方概率为准！'
+
+    up_message = '、'.join(ups)
+    message = f'本次卡池up：{up_message}，仅为概率模拟，实际以官方抽卡为准！'
+
     for result in results:
         message += f'\n你获得了{result.get("level")}星{result.get("type")}干员：{result.get("name")}'
 
@@ -100,11 +103,11 @@ def draw_once():
 
 def pick_up(choices):
     rand = random.random()
-    if rand > 0.5:
-        choices = list(filter(lambda x: x['name'] in ups, choices))
-        res = random.choice(choices)
+    up_choices = list(filter(lambda x: x['name'] in ups, choices))
+    print(up_choices)
+    if rand > 0.5 and len(up_choices) > 0:
+        res = random.choice(up_choices)
     else:
-        choices = list(filter(lambda x: x['name'] not in ups, choices))
-        res = random.choice(choices)
+        res = random.choice(up_choices)
 
     return res
