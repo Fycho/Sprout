@@ -8,12 +8,13 @@ def get_employee_data():
 
     return results
 
+ups = ['夜莺', '推进之王', '芙兰卡', '白金', '德克萨斯']
 
 async def handle_index(bot, ctx):
     message = '''/ark 明日方舟指令帮助：
 /ark info [名字] - 查看干员信息
-/ark draw - 模拟一次干员寻访（无up、保底计算）
-/ark crazy - 模拟十连干员寻访（无up、保底计算）'''
+/ark draw - 模拟一次干员寻访）
+/ark crazy - 模拟十连干员寻访'''
 # / ark calc[标签1 | 标签2..] - 公开招募计算器「未开放」
 # /ark recruit [标签1|标签2..] - 模拟公开招募「未开放」
     return await bot.send(ctx, message=message, at_sender=True)
@@ -35,7 +36,8 @@ async def handle_info(bot, ctx, sub_arg):
 async def handle_single_draw(bot, ctx):
     result = draw_once()
 
-    return await bot.send(ctx, message=f'注：仅为模拟，实际以官方概率为准！\n你获得了{result.get("level")}星{result.get("type")}干员：{result.get("name")}', at_sender=True)
+    up_message = '、'.join(ups)
+    return await bot.send(ctx, message=f'本次卡池up：{up_message}，仅为概率模拟，实际以官方抽卡为准！\n你获得了{result.get("level")}星{result.get("type")}干员：{result.get("name")}', at_sender=True)
 
 async def handle_ten_draw(bot, ctx):
     results = []
@@ -83,15 +85,26 @@ def draw_once():
     employees = get_employee_data()
     if r == 3:
         choices = list(filter(lambda x: x['level'] == 6 and x['private'], employees))
-        result = random.choice(choices)
+        result = pick_up(choices)
     elif r == 2:
         choices = list(filter(lambda x: x['level'] == 5 and x['private'], employees))
-        result = random.choice(choices)
+        result = pick_up(choices)
     elif r == 1:
         choices = list(filter(lambda x: x['level'] == 4 and x['private'], employees))
-        result = random.choice(choices)
+        result = pick_up(choices)
     else:
         choices = list(filter(lambda x: x['level'] == 3 and x['private'], employees))
-        result = random.choice(choices)
+        result = pick_up(choices)
 
     return result
+
+def pick_up(choices):
+    rand = random.random()
+    if rand > 0.5:
+        choices = list(filter(lambda x: x['name'] in ups, choices))
+        res = random.choice(choices)
+    else:
+        choices = list(filter(lambda x: x['name'] not in ups, choices))
+        res = random.choice(choices)
+
+    return res
