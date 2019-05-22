@@ -6,6 +6,8 @@ async def run(bot, ctx, cmd, arg) -> None:
     * 豆芽菜的基本信息。
 - /vtb
     * Virtual Youtuber helper，详情请敲/vtb help。
+- /ark
+    * 明日方舟helper。
 - /moegirl <标签1> <标签2> ...
     * 小妹妹图查询。标签可以是小妹妹的罗马字名字，也可以是其他特征，用下划线代表标签内空格，多个标签空格分割。暂不支持直接发图片。
 - /remind [时间|时间段] [内容]
@@ -16,8 +18,8 @@ async def run(bot, ctx, cmd, arg) -> None:
     * 查询对应城市的天气预报，如果没有天数参数则默认当天。参数天的含义：0为今天，1为明天，2为后天，以此类推，只能预测5天。
 - /omok
     * 五子棋游戏
-- /tzfe
-    * 2048游戏(开发中)
+- /word
+    * 本群最近30天词频顺序
 - /rps [剪刀|石头|布]
     * 和豆芽菜玩猜拳。'''
     await bot.send(ctx, message=message)

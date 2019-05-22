@@ -18,14 +18,16 @@ async def run(bot, ctx, cmd, arg) -> None:
     if 'group_id' not in ctx:
         return await bot.send(ctx, '非群')
 
-    message = handle_group(ctx['group_id'])
+    message = '本群最近30天词频顺序：\n'
+    message += handle_group(ctx['group_id'])
+
     await bot.send(ctx, message)
 
 
 def handle_group(gid):
     with pymysql.connect(host=HOST, user=USER, passwd=PWD, db=DB, charset='utf8') as c:
         now = datetime.datetime.now()
-        oneweek = datetime.timedelta(days=7)
+        oneweek = datetime.timedelta(days=30)
         time = (now - oneweek).strftime('%Y-%m-%d %H:%M:%S')
         c.execute(f'SELECT msg FROM msg WHERE msg NOT LIKE "%[CQ%" AND gid={gid} AND created>"{time}"')
         results = handle_seg(c.fetchall())
