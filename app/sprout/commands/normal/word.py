@@ -10,15 +10,15 @@ USER = os.environ.get('MYSQL_USER')
 PWD = os.environ.get('MYSQL_PWD')
 DB = 'sprout'
 
-stopwords_path = '/data/app/analyzers/stopwords.txt'
-user_dict_path = '/data/app/analyzers/user_dict.txt'
+stopwords_path = '/data/app/sprout/modules/analyzers/stopwords.txt'
+user_dict_path = '/data/app/sprout/modules/analyzers/user_dict.txt'
 
 
 async def run(bot, ctx, cmd, arg) -> None:
     if 'group_id' not in ctx:
         return await bot.send(ctx, '非群')
 
-    message = '本群最近30天词频顺序：'
+    message = '最近30天热词统计：'
     items = handle_group(ctx['group_id'])
     for item in items:
         message += f'\n{item[0]}({item[1]})'

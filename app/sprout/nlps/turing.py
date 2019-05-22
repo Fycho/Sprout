@@ -34,7 +34,7 @@ async def fetch_turing_results(user_id: int, input: str) -> dict:
 
 async def handle_turing_api(bot, ctx) -> bool:
     rnd = random.random()
-    if rnd > 0.01:
+    if rnd > 0.006:
         return False
 
     message = ctx['message']
