@@ -19,16 +19,14 @@ up_2 = ['角峰', '初雪', '崖心', '银灰']
 
 
 def get_ups(arg) -> List:
-    if not arg or is_number(arg):
+    if not arg or is_number(arg) == False:
         ups = []
     else:
         try:
             ups = eval(f'up_{arg}')
         except Exception:
-            print(Exception)
             ups = []
 
-    print(ups)
     return ups
 
 
@@ -61,8 +59,13 @@ async def handle_single_draw(bot, ctx, sub_arg):
     ups = get_ups(sub_arg[0])
     result = draw_once(ups)
 
-    up_message = '、'.join(ups)
-    message = f'本次卡池up：{up_message}，仅为概率模拟，实际以官方抽卡为准！\n你获得了{result["level"]}星{result["type"]}干员：{result["name"]}'
+    if len(ups) > 0:
+        up_message = '、'.join(ups)
+        message = f'本次卡池up：{up_message}，仅为概率模拟，实际以官方抽卡为准！'
+    else:
+        message = f'本次卡池无up，仅为概率模拟，实际以官方抽卡为准！'
+
+    message += f'\n你获得了{result["level"]}星{result["type"]}干员：{result["name"]}'
     return await bot.send(ctx, message=message, at_sender=True)
 
 
@@ -72,8 +75,11 @@ async def handle_ten_draw(bot, ctx, sub_arg):
     for i in range(0, 10):
         results.append(draw_once(ups))
 
-    up_message = '、'.join(ups)
-    message = f'本次卡池up：{up_message}，仅为概率模拟，实际以官方抽卡为准！'
+    if len(ups) > 0:
+        up_message = '、'.join(ups)
+        message = f'本次卡池up：{up_message}，仅为概率模拟，实际以官方抽卡为准！'
+    else:
+        message = f'本次卡池无up，仅为概率模拟，实际以官方抽卡为准！'
 
     for result in results:
         message += f'\n你获得了{result["level"]}星{result["type"]}干员：{result["name"]}'
