@@ -55,7 +55,7 @@ async def handle_info(bot, ctx, sub_arg):
 
 
 async def handle_single_draw(bot, ctx, sub_arg):
-    ups = get_ups(sub_arg)
+    ups = get_ups(sub_arg[0])
     result = draw_once(ups)
 
     up_message = '、'.join(ups)
@@ -64,7 +64,7 @@ async def handle_single_draw(bot, ctx, sub_arg):
 
 
 async def handle_ten_draw(bot, ctx, sub_arg):
-    ups = get_ups(sub_arg)
+    ups = get_ups(sub_arg[0])
     results = []
     for i in range(0, 10):
         results.append(draw_once(ups))
