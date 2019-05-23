@@ -55,8 +55,10 @@ async def handle_info(bot, ctx, sub_arg):
 
 
 async def handle_single_draw(bot, ctx, sub_arg):
-    print(sub_arg)
-    ups = get_ups(sub_arg[0])
+    if not sub_arg or len(sub_arg) < 1:
+        ups = []
+    else:
+        ups = get_ups(sub_arg[0])
     result = draw_once(ups)
 
     if len(ups) > 0:
@@ -70,7 +72,10 @@ async def handle_single_draw(bot, ctx, sub_arg):
 
 
 async def handle_ten_draw(bot, ctx, sub_arg):
-    ups = get_ups(sub_arg[0])
+    if not sub_arg or len(sub_arg) < 1:
+        ups = []
+    else:
+        ups = get_ups(sub_arg[0])
     results = []
     for i in range(0, 10):
         results.append(draw_once(ups))
