@@ -25,8 +25,10 @@ def get_ups(arg) -> List:
         try:
             ups = eval(f'up_{arg}')
         except Exception:
+            print(Exception)
             ups = []
 
+    print(ups)
     return ups
 
 
@@ -55,6 +57,7 @@ async def handle_info(bot, ctx, sub_arg):
 
 
 async def handle_single_draw(bot, ctx, sub_arg):
+    print(sub_arg)
     ups = get_ups(sub_arg[0])
     result = draw_once(ups)
 
