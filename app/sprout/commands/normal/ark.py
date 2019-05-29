@@ -6,8 +6,8 @@ from sprout.helpers import is_number
 from typing import List
 
 
-def get_employee_data():
-    with open('/data/app/sprout/modules/ark/employee.json', 'r') as f:
+def get_operators():
+    with open('/data/app/sprout/modules/ark/operators.json', 'r') as f:
         results = json.loads(f.read())
 
     return results
@@ -16,6 +16,7 @@ def get_employee_data():
 up_0 = ['能天使', '安洁莉娜', '天火', '可颂', '凛冬']
 up_1 = ['夜莺', '推进之王', '芙兰卡', '白金', '德克萨斯']
 up_2 = ['角峰', '初雪', '崖心', '银灰']
+up_3 = ['艾雅法拉', '伊芙利特', '赫默', '梅尔', '拉普兰德']
 
 
 def get_ups(arg) -> List:
@@ -41,8 +42,8 @@ async def handle_index(bot, ctx):
 
 
 async def handle_info(bot, ctx, sub_arg):
-    employees = get_employee_data()
-    result = list(filter(lambda x: x['name'] == sub_arg[0], employees))
+    operators = get_operators()
+    result = list(filter(lambda x: x['name'] == sub_arg[0], operators))
     if len(result) > 0:
         item = result[0]
         message = f'名字：{item["name"]}({item["name-en"]})\n阵营：{item["camp"]}\n类型：{item["type"]}\n稀有度：{item["level"]}星'
@@ -124,18 +125,18 @@ def draw_once(ups):
         else:
             continue
 
-    employees = get_employee_data()
+    operators = get_operators()
     if r == 3:
-        choices = list(filter(lambda x: x['level'] == 6 and x['private'], employees))
+        choices = list(filter(lambda x: x['level'] == 6 and x['private'], operators))
         result = pick_up(choices, ups)
     elif r == 2:
-        choices = list(filter(lambda x: x['level'] == 5 and x['private'], employees))
+        choices = list(filter(lambda x: x['level'] == 5 and x['private'], operators))
         result = pick_up(choices, ups)
     elif r == 1:
-        choices = list(filter(lambda x: x['level'] == 4 and x['private'], employees))
+        choices = list(filter(lambda x: x['level'] == 4 and x['private'], operators))
         result = pick_up(choices, ups)
     else:
-        choices = list(filter(lambda x: x['level'] == 3 and x['private'], employees))
+        choices = list(filter(lambda x: x['level'] == 3 and x['private'], operators))
         result = pick_up(choices, ups)
 
     return result
