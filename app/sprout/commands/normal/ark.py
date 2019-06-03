@@ -17,6 +17,7 @@ up_0 = ['能天使', '安洁莉娜', '天火', '可颂', '凛冬']
 up_1 = ['夜莺', '推进之王', '芙兰卡', '白金', '德克萨斯']
 up_2 = ['角峰', '初雪', '崖心', '银灰']
 up_3 = ['艾雅法拉', '伊芙利特', '赫默', '梅尔', '拉普兰德']
+up_4 = ['斯卡蒂', '夜魔', '临光', '猎蜂', '暗锁']
 
 
 def get_ups(arg) -> List:
@@ -128,25 +129,25 @@ def draw_once(ups):
     operators = get_operators()
     if r == 3:
         choices = list(filter(lambda x: x['level'] == 6 and x['private'], operators))
-        result = pick_up(choices, ups)
+        result = pick_up(choices, ups, 0.5)
     elif r == 2:
         choices = list(filter(lambda x: x['level'] == 5 and x['private'], operators))
-        result = pick_up(choices, ups)
+        result = pick_up(choices, ups, 0.5)
     elif r == 1:
         choices = list(filter(lambda x: x['level'] == 4 and x['private'], operators))
-        result = pick_up(choices, ups)
+        result = pick_up(choices, ups, 0.2)
     else:
         choices = list(filter(lambda x: x['level'] == 3 and x['private'], operators))
-        result = pick_up(choices, ups)
+        result = pick_up(choices, ups, 0.2)
 
     return result
 
-
-def pick_up(choices, ups):
+# prob: x星内up的出货率
+def pick_up(choices, ups, prob):
     rand = random.random()
     up_choices = list(filter(lambda x: x['name'] in ups, choices))
     else_choices = list(filter(lambda x: x['name'] not in ups, choices))
-    if rand > 0.5 and len(up_choices) > 0:
+    if rand > prob and len(up_choices) > 0:
         res = random.choice(up_choices)
     else:
         res = random.choice(else_choices)

@@ -1410,5 +1410,83 @@
     "public": true,
     "private": true,
     "name-en": "Saria"
+  },
+  {
+    "name": "空爆",
+    "camp": "罗德岛",
+    "type": "狙击",
+    "level": 3,
+    "sex": "女",
+    "characteristic": "攻击造成群体物理伤害",
+    "tags": [
+      "远程位",
+      "群攻"
+    ],
+    "public": false,
+    "private": true,
+    "name-en": "Catapult"
+  },
+  {
+    "name": "月见夜",
+    "camp": "罗德岛",
+    "type": "近卫",
+    "level": 3,
+    "sex": "男",
+    "characteristic": "可以进行远程攻击，但此时攻击力降低至80%",
+    "tags": [
+      "近战位",
+      "输出"
+    ],
+    "public": false,
+    "private": true,
+    "name-en": "Midnight"
+  },
+  {
+    "name": "猎蜂",
+    "camp": "乌萨斯",
+    "type": "近卫",
+    "level": 4,
+    "sex": "女",
+    "characteristic": "能够阻挡一个敌人",
+    "tags": [
+      "近战位",
+      "输出"
+    ],
+    "public": false,
+    "private": true,
+    "name-en": "Beehunter"
+  },
+  {
+    "name": "夜魔",
+    "camp": "维多利亚",
+    "type": "近卫",
+    "level": 5,
+    "sex": "女",
+    "characteristic": "攻击造成法术伤害",
+    "tags": [
+      "远程位",
+      "输出",
+      "治疗",
+      "减速"
+    ],
+    "public": false,
+    "private": true,
+    "name-en": "Nightmare"
+  },
+  {
+    "name": "斯卡蒂",
+    "camp": "深海猎人",
+    "type": "近卫",
+    "level": 6,
+    "sex": "女",
+    "characteristic": "能够阻挡一个敌人",
+    "tags": [
+      "远程位",
+      "输出",
+      "生存"
+    ],
+    "public": false,
+    "private": true,
+    "name-en": "Skadi"
   }
 ]
