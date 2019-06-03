@@ -147,7 +147,7 @@ def pick_up(choices, ups, prob):
     rand = random.random()
     up_choices = list(filter(lambda x: x['name'] in ups, choices))
     else_choices = list(filter(lambda x: x['name'] not in ups, choices))
-    if rand > prob and len(up_choices) > 0:
+    if rand < prob and len(up_choices) > 0:
         res = random.choice(up_choices)
     else:
         res = random.choice(else_choices)
