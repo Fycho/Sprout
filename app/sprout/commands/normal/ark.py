@@ -20,7 +20,7 @@ up_3 = ['艾雅法拉', '伊芙利特', '赫默', '梅尔', '拉普兰德']
 up_4 = ['斯卡蒂', '夜魔', '临光', '猎蜂', '暗锁']
 up_5 = ['闪灵', '塞雷娅', '真理', '幽灵鲨', '红']
 up_6 = ['银灰', '夜莺', '蓝毒', '白面鸮', '空']
-
+up_100 = ['杜宾', '米格鲁', '芙蓉', '克洛丝', '芬']
 
 def get_ups(arg) -> List:
     if not arg or is_number(arg) == False:
@@ -140,7 +140,7 @@ def draw_once(ups):
         result = pick_up(choices, ups, 0.2)
     else:
         choices = list(filter(lambda x: x['level'] == 3 and x['private'], operators))
-        result = pick_up(choices, ups, 0.2)
+        result = pick_up(choices, ups, 0.5)
 
     return result
 
