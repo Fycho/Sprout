@@ -1130,17 +1130,17 @@
     "name": "陈",
     "camp": "龙门",
     "type": "近卫",
-    "level": 5,
+    "level": 6,
     "sex": "女",
-    "characteristic": "三测暂不实装",
+    "characteristic": "普通攻击连续攻击两次",
     "tags": [
       "近战位",
       "群攻",
       "支援"
     ],
     "public": false,
-    "private": false,
-    "name-en": "CH'EN"
+    "private": true,
+    "name-en": "Ch'en"
   },
   {
     "name": "拉普兰德",
@@ -1489,5 +1489,57 @@
     "public": false,
     "private": true,
     "name-en": "Skadi"
+  },
+  {
+    "name": "诗怀雅",
+    "camp": "龙门",
+    "type": "近卫",
+    "level": 5,
+    "sex": "女",
+    "characteristic": "",
+    "tags": [
+    ],
+    "public": false,
+    "private": true,
+    "name-en": "Swire"
+  },
+  {
+    "name": "格雷伊",
+    "camp": "罗德岛",
+    "type": "术师",
+    "level": 4,
+    "sex": "男",
+    "characteristic": "",
+    "tags": [
+    ],
+    "public": false,
+    "private": true,
+    "name-en": "Greyy"
+  },
+  {
+    "name": "泡普卡",
+    "camp": "罗德岛",
+    "type": "近卫",
+    "level": 3,
+    "sex": "女",
+    "characteristic": "",
+    "tags": [
+    ],
+    "public": false,
+    "private": true,
+    "name-en": "Popuker"
+  },
+  {
+    "name": "斑点",
+    "camp": "罗德岛",
+    "type": "重装",
+    "level": 3,
+    "sex": "男",
+    "characteristic": "",
+    "tags": [
+    ],
+    "public": false,
+    "private": true,
+    "name-en": "Spot"
   }
 ]
