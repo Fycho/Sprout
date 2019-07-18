@@ -97,3 +97,5 @@ sv
 ds
 timing
 metadata
+斯卡蒂
+星熊
