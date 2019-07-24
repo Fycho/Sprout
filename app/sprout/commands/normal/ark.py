@@ -13,19 +13,18 @@ def get_operators():
     return results
 
 
-up_0 = ['能天使', '安洁莉娜', '天火', '可颂', '凛冬']
-up_1 = ['夜莺', '推进之王', '芙兰卡', '白金', '德克萨斯']
-up_2 = ['角峰', '初雪', '崖心', '银灰']
-up_3 = ['艾雅法拉', '伊芙利特', '赫默', '梅尔', '拉普兰德']
-up_4 = ['斯卡蒂', '夜魔', '临光', '猎蜂', '暗锁']
-up_5 = ['闪灵', '塞雷娅', '真理', '幽灵鲨', '红']
-up_6 = ['银灰', '夜莺', '蓝毒', '白面鸮', '空']
-up_7 = ['陈', '诗怀雅', '食铁兽', '格雷伊']
-up_8 = ['安洁莉娜', '推进之王', '狮蝎', '华法琳', '守林人']
-up_9 = ['星熊', '雷蛇', '陨星']
-up_10 = ['艾雅法拉', '塞雷娅', '普罗旺斯', '红', '芙兰卡']
-up_100 = ['杜宾', '米格鲁', '芙蓉', '克洛丝', '芬']
+up_01 = ['能天使', '安洁莉娜', '天火', '可颂', '凛冬']
+up_02 = ['夜莺', '推进之王', '芙兰卡', '白金', '德克萨斯']
+up_03 = ['艾雅法拉', '伊芙利特', '赫默', '梅尔', '拉普兰德']
+up_04 = ['闪灵', '塞雷娅', '真理', '幽灵鲨', '红']
+up_05 = ['银灰', '夜莺', '蓝毒', '白面鸮', '空']
+up_06 = ['安洁莉娜', '推进之王', '狮蝎', '华法琳', '守林人']
+up_07 = ['艾雅法拉', '塞雷娅', '普罗旺斯', '红', '芙兰卡']
 
+up_e01 = ['角峰', '初雪', '崖心', '银灰']
+up_e02 = ['斯卡蒂', '夜魔', '临光', '猎蜂', '暗锁']
+up_e03 = ['陈', '诗怀雅', '食铁兽', '格雷伊']
+up_e04 = ['星熊', '雷蛇', '陨星']
 def get_ups(arg) -> List:
     if not arg or is_number(arg) == False:
         ups = []
@@ -41,13 +40,9 @@ def get_ups(arg) -> List:
 async def handle_index(bot, ctx):
     message = '''/ark 明日方舟指令帮助：
 /ark info [名字] - 查看干员信息
-/ark draw <数字> - 模拟一次干员寻访，数字从0开始递增，表示了一组包含了不同up干员的池子，无数字则各干员均等概率
-/ark crazy <数字> - 模拟十连干员寻访
-/ark idiot <数字> - 模拟五十连干员寻访（***刷屏警告***）
-/ark genius <数字> - 模拟一百连干员寻访（***刷屏警告***）
-'''
-    # / ark calc[标签1 | 标签2..] - 公开招募计算器「未开放」
-    # /ark recruit [标签1|标签2..] - 模拟公开招募「未开放」
+/ark draw <参数> - 模拟一次干员寻访（参数从01开始递增，表示了游戏内各期干员概率常规up池，活动池子从e01开始递增，无数字则各干员均等概率，例如/ark draw 01, /ark draw e01）
+/ark genius <参数> - 模拟十连干员寻访（参数同上）
+/ark idiot <参数> - 模拟五十连干员寻访（***刷屏警告***）'''
     return await bot.send(ctx, message=message, at_sender=True)
 
 
@@ -115,12 +110,10 @@ async def run(bot, ctx, cmd, arg) -> None:
         return await handle_info(bot, ctx, sub_arg)
     elif sub_cmd == 'draw':
         return await handle_single_draw(bot, ctx, sub_arg)
-    elif sub_cmd == 'crazy':
+    elif sub_cmd == 'genius':
         return await handle_multi_draws(bot, ctx, sub_arg, 10)
     elif sub_cmd == 'idiot':
         return await handle_multi_draws(bot, ctx, sub_arg, 50)
-    elif sub_cmd == 'genius':
-        return await handle_multi_draws(bot, ctx, sub_arg, 100)
     else:
         return
 
