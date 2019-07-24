@@ -41,8 +41,11 @@ def get_ups(arg) -> List:
 async def handle_index(bot, ctx):
     message = '''/ark 明日方舟指令帮助：
 /ark info [名字] - 查看干员信息
-/ark draw - 模拟一次干员寻访
-/ark crazy - 模拟十连干员寻访'''
+/ark draw <数字> - 模拟一次干员寻访，数字从0开始递增，表示了一组包含了不同up干员的池子，无数字则各干员均等概率
+/ark crazy <数字> - 模拟十连干员寻访
+/ark idiot <数字> - 模拟五十连干员寻访（***刷屏警告***）
+/ark genius <数字> - 模拟一百连干员寻访（***刷屏警告***）
+'''
     # / ark calc[标签1 | 标签2..] - 公开招募计算器「未开放」
     # /ark recruit [标签1|标签2..] - 模拟公开招募「未开放」
     return await bot.send(ctx, message=message, at_sender=True)
@@ -79,13 +82,13 @@ async def handle_single_draw(bot, ctx, sub_arg):
     return await bot.send(ctx, message=message, at_sender=True)
 
 
-async def handle_ten_draw(bot, ctx, sub_arg):
+async def handle_multi_draws(bot, ctx, sub_arg, times = 10):
     if not sub_arg or len(sub_arg) < 1:
         ups = []
     else:
         ups = get_ups(sub_arg[0])
     results = []
-    for i in range(0, 10):
+    for i in range(0, times):
         results.append(draw_once(ups))
 
     if len(ups) > 0:
@@ -113,7 +116,11 @@ async def run(bot, ctx, cmd, arg) -> None:
     elif sub_cmd == 'draw':
         return await handle_single_draw(bot, ctx, sub_arg)
     elif sub_cmd == 'crazy':
-        return await handle_ten_draw(bot, ctx, sub_arg)
+        return await handle_multi_draws(bot, ctx, sub_arg, 10)
+    elif sub_cmd == 'idiot':
+        return await handle_multi_draws(bot, ctx, sub_arg, 50)
+    elif sub_cmd == 'genius':
+        return await handle_multi_draws(bot, ctx, sub_arg, 100)
     else:
         return
 
