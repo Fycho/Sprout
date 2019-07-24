@@ -25,8 +25,10 @@ up_e01 = ['角峰', '初雪', '崖心', '银灰']
 up_e02 = ['斯卡蒂', '夜魔', '临光', '猎蜂', '暗锁']
 up_e03 = ['陈', '诗怀雅', '食铁兽', '格雷伊']
 up_e04 = ['星熊', '雷蛇', '陨星']
+
 def get_ups(arg) -> List:
-    if not arg or is_number(arg) == False:
+    tested = re.match(r'^e\d+$', arg, re.I)
+    if not arg or not tested:
         ups = []
     else:
         try:
