@@ -120,7 +120,7 @@ async def run(bot, ctx, cmd, arg) -> None:
 
 def draw_once(ups):
     # 三、四、五、六星概率
-    ps = [0.02, 0.5, 0.08, 0.4]
+    ps = [0.4, 0.5, 0.08, 0.02]
     rand = random.random()
     t = 0
     r = 0
@@ -135,7 +135,7 @@ def draw_once(ups):
     operators = get_operators()
     if r == 3:
         choices = list(filter(lambda x: x['level'] == 6 and x['private'], operators))
-        result = pick_up(choices, ups, 1)
+        result = pick_up(choices, ups, 0.5)
     elif r == 2:
         choices = list(filter(lambda x: x['level'] == 5 and x['private'], operators))
         result = pick_up(choices, ups, 0.5)
