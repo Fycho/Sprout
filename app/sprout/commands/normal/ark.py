@@ -62,31 +62,17 @@ async def handle_info(bot, ctx, sub_arg):
         return await bot.send(ctx, message='没有找到该干员')
 
 
-async def handle_single_draw(bot, ctx, sub_arg):
-    if not sub_arg or len(sub_arg) < 1:
-        ups = []
-    else:
-        ups = get_ups(sub_arg[0])
-    result = draw_once(ups)
-
-    if len(ups) > 0:
-        up_message = '、'.join(ups)
-        message = f'本次卡池up：{up_message}，仅为概率模拟，实际以官方抽卡为准！'
-    else:
-        message = f'本次卡池无up，仅为概率模拟，实际以官方抽卡为准！'
-
-    message += f'\n你获得了{result["level"]}星{result["type"]}干员：{result["name"]}'
-    return await bot.send(ctx, message=message, at_sender=True)
-
 
 async def handle_multi_draws(bot, ctx, sub_arg, times = 10):
     if not sub_arg or len(sub_arg) < 1:
         ups = []
     else:
         ups = get_ups(sub_arg[0])
+
     results = []
+    operators = get_operators()
     for i in range(0, times):
-        results.append(draw_once(ups))
+        results.append(draw_once(ups, operators))
 
     if len(ups) > 0:
         up_message = '、'.join(ups)
@@ -111,7 +97,7 @@ async def run(bot, ctx, cmd, arg) -> None:
     if sub_cmd == 'info':
         return await handle_info(bot, ctx, sub_arg)
     elif sub_cmd == 'draw':
-        return await handle_single_draw(bot, ctx, sub_arg)
+        return await handle_multi_draws(bot, ctx, sub_arg, 1)
     elif sub_cmd == 'genius':
         return await handle_multi_draws(bot, ctx, sub_arg, 10)
     elif sub_cmd == 'idiot':
@@ -120,7 +106,7 @@ async def run(bot, ctx, cmd, arg) -> None:
         return
 
 
-def draw_once(ups):
+def draw_once(ups, operators):
     # 三、四、五、六星概率
     ps = [0.4, 0.5, 0.08, 0.02]
     rand = random.random()
@@ -128,13 +114,12 @@ def draw_once(ups):
     r = 0
     for rk, p in enumerate(ps):
         t += p
-        if (rand <= t):
+        if rand <= t:
             r = rk
             break
         else:
             continue
 
-    operators = get_operators()
     if r == 3:
         choices = list(filter(lambda x: x['level'] == 6 and x['private'], operators))
         result = pick_up(choices, ups, 0.5)
