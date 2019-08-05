@@ -2,7 +2,6 @@ import json
 import re
 import random
 
-from sprout.helpers import is_number
 from typing import List
 
 
@@ -12,6 +11,9 @@ def get_operators():
 
     return results
 
+
+prob_gradient = [0.4, 0.5, 0.08, 0.02]
+up_prob_gradient = [0.2, 0.2, 0.5, 0.5]
 
 up_01 = ['能天使', '安洁莉娜', '天火', '可颂', '凛冬']
 up_02 = ['夜莺', '推进之王', '芙兰卡', '白金', '德克萨斯']
@@ -25,6 +27,7 @@ up_e01 = ['角峰', '初雪', '崖心', '银灰']
 up_e02 = ['斯卡蒂', '夜魔', '临光', '猎蜂', '暗锁']
 up_e03 = ['陈', '诗怀雅', '食铁兽', '格雷伊']
 up_e04 = ['星熊', '雷蛇', '陨星']
+
 
 def get_ups(arg) -> List:
     tested = re.match(r'^e?\d+$', arg, re.I)
@@ -41,29 +44,14 @@ def get_ups(arg) -> List:
 
 async def handle_index(bot, ctx):
     message = '''/ark 明日方舟指令帮助：
-/ark info [名字] - 查看干员信息
 /ark draw <参数> - 模拟一次干员寻访（参数从01开始递增，表示了游戏内各期干员概率常规up池，活动池子从e01开始递增，无数字则各干员均等概率，例如/ark draw 01, /ark draw e01）
 /ark genius <参数> - 模拟十连干员寻访（参数同上）
 /ark idiot <参数> - 模拟五十连干员寻访（***刷屏警告***）'''
     return await bot.send(ctx, message=message, at_sender=True)
 
 
-async def handle_info(bot, ctx, sub_arg):
-    operators = get_operators()
-    result = list(filter(lambda x: x['name'] == sub_arg[0], operators))
-    if len(result) > 0:
-        item = result[0]
-        message = f'名字：{item["name"]}({item["name-en"]})\n阵营：{item["camp"]}\n类型：{item["type"]}\n稀有度：{item["level"]}星'
-        tags = '、'.join(item.get("tags"))
-        message += f'\n标签：{tags}'
-        message += f'\n描述：{item["characteristic"]}'
-        return await bot.send(ctx, message=message)
-    else:
-        return await bot.send(ctx, message='没有找到该干员')
 
-
-
-async def handle_multi_draws(bot, ctx, sub_arg, times = 10):
+async def handle_multi_draws(bot, ctx, sub_arg, times=10):
     if not sub_arg or len(sub_arg) < 1:
         ups = []
     else:
@@ -94,25 +82,21 @@ async def run(bot, ctx, cmd, arg) -> None:
     sub_cmd = args[0]
     sub_arg = args[1:]
 
-    if sub_cmd == 'info':
-        return await handle_info(bot, ctx, sub_arg)
-    elif sub_cmd == 'draw':
+    if sub_cmd == 'draw' or sub_cmd == 'd':
         return await handle_multi_draws(bot, ctx, sub_arg, 1)
-    elif sub_cmd == 'genius':
+    elif sub_cmd == 'genius' or sub_cmd == 'g':
         return await handle_multi_draws(bot, ctx, sub_arg, 10)
-    elif sub_cmd == 'idiot':
+    elif sub_cmd == 'idiot' or sub_cmd == 'i':
         return await handle_multi_draws(bot, ctx, sub_arg, 50)
     else:
         return
 
 
 def draw_once(ups, operators):
-    # 三、四、五、六星概率
-    ps = [0.4, 0.5, 0.08, 0.02]
     rand = random.random()
     t = 0
     r = 0
-    for rk, p in enumerate(ps):
+    for rk, p in enumerate(prob_gradient):
         t += p
         if rand <= t:
             r = rk
@@ -122,18 +106,19 @@ def draw_once(ups, operators):
 
     if r == 3:
         choices = list(filter(lambda x: x['level'] == 6 and x['private'], operators))
-        result = pick_up(choices, ups, 0.5)
+        result = pick_up(choices, ups, up_prob_gradient[3])
     elif r == 2:
         choices = list(filter(lambda x: x['level'] == 5 and x['private'], operators))
-        result = pick_up(choices, ups, 0.5)
+        result = pick_up(choices, ups, up_prob_gradient[2])
     elif r == 1:
         choices = list(filter(lambda x: x['level'] == 4 and x['private'], operators))
-        result = pick_up(choices, ups, 0.2)
+        result = pick_up(choices, ups, up_prob_gradient[1])
     else:
         choices = list(filter(lambda x: x['level'] == 3 and x['private'], operators))
-        result = pick_up(choices, ups, 0.5)
+        result = pick_up(choices, ups, up_prob_gradient[0])
 
     return result
+
 
 # prob: x星内up的出货率
 def pick_up(choices, ups, prob):
